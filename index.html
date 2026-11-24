@@ -175,6 +175,23 @@
       .bar-num { width: 30px; text-align: right; font-weight: 600; flex: none; }
       .fc-actions { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; align-items: stretch; }
       .fc-actions select { flex: 1 1 170px; }
+
+      /* ability-based training picker */
+      .train-box { margin-top: 12px; border: 1.5px solid var(--line); border-radius: 10px; padding: 10px; background: var(--panel2); }
+      .train-head { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+      .train-title { font-weight: 900; font-size: .92rem; }
+      .train-now { font-size: .78rem; font-weight: 700; color: var(--red); }
+      .train-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 7px; }
+      .train-btn {
+        display: flex; flex-direction: column; align-items: flex-start; gap: 2px; text-align: left;
+        border: 1.5px solid var(--line); background: var(--panel); color: var(--ink);
+        border-radius: 8px; padding: 8px 10px; min-height: 3rem; cursor: pointer; font: inherit;
+      }
+      .train-btn .train-name { font-weight: 900; font-size: .86rem; }
+      .train-btn .train-meta { font-size: .7rem; color: var(--ink-soft); line-height: 1.45; }
+      .train-btn.on { border-color: var(--red); background: var(--gold-bg); box-shadow: inset 0 0 0 1px var(--red); }
+      .train-btn.on .train-name { color: var(--red); }
+      .train-desc { font-size: .74rem; color: var(--ink-soft); margin-top: 8px; line-height: 1.55; }
       select, input[type="text"] {
         background: var(--panel); border: 1.5px solid var(--line); border-radius: 8px;
         padding: 8px 10px; font-size: .92rem;
@@ -722,7 +739,7 @@
           <div class="goal-text" id="goalText"></div>
         </div>
 
-        <h2 class="sec">所属選手 <span class="sec-note">練習メニューと能力の割り振りは選手ごとに決める</span></h2>
+        <h2 class="sec">所属選手 <span class="sec-note">能力別の練習と能力の割り振りは選手ごとに決める</span></h2>
         <div id="fighterList"></div>
 
         <div id="retireSection" hidden>
@@ -855,7 +872,7 @@
         <div class="howto">
           <b>遊び方</b><br />
           ・開業資金は800万円＋開業祝い金200万円。所属選手2人でスタート。<br />
-          ・毎月、選手ごとに練習メニューを選び、たまった経験値を6つの能力（パンチ／スピード／技／心／体／防御）に割り振って育てる。<br />
+          ・毎月、選手ごとに能力別の練習（パンチ練習／ロードワーク／スパーリング／ディフェンス練習など）を選ぶと、その能力に経験値が入る。余った経験値は6つの能力（パンチ／スピード／技／心／体／防御）に自由に割り振って育てる。<br />
           ・食事はジム全体の献立。同じ献立ばかりだと選手が飽きる。<br />
           ・偶数月は興行月。全選手が試合をして、勝てばランクポイントとファイトマネーが入る。<br />
           ・スカウトで新しい才能を迎え、施設を建ててジムの格を上げよう。資金が尽きたら経営破綻でゲームオーバー。<br />
@@ -1979,13 +1996,17 @@
         html += '<div class="bar-row"><span class="bar-label">疲労</span><div class="bar-track"><div class="bar-fill fatigue ' + fatigueClass(f.fatigue) + '" style="width:' + clamp(f.fatigue, 0, 100) + '%"></div></div><span class="bar-num num">' + Math.round(f.fatigue) + '</span><span style="font-size:.72rem;color:var(--ink-soft);">' + fatigueLabel(f.fatigue) + '</span></div>';
         var cond = (typeof f.cond === 'number') ? f.cond : 70;
         html += '<div class="bar-row"><span class="bar-label">調子</span><div class="bar-track"><div class="bar-fill cond ' + condClass(cond) + '" style="width:' + clamp(cond, 0, 100) + '%"></div></div><span class="bar-num num">' + Math.round(cond) + '</span><span style="font-size:.72rem;color:var(--ink-soft);">' + condLabel(cond) + '（試合の動きに影響）</span></div>';
-        html += '<div class="fc-actions">';
-        html += '<select data-training="' + f.id + '" aria-label="' + esc(f.name) + 'の練習メニュー">';
+        var curT = trainingOf(f);
+        html += '<div class="train-box"><div class="train-head"><span class="train-title">今月の練習（能力別）</span><span class="train-now">選択中：' + esc(curT.name) + '</span></div>';
+        html += '<div class="train-grid" role="group" aria-label="' + esc(f.name) + 'の能力別練習">';
         TRAININGS.forEach(function (t) {
           var tgt = (t.targets && t.targets.length) ? t.targets.map(function (k) { return (STATS.filter(function (s) { return s.key === k; })[0] || {}).name; }).join('・') : '回復';
-          html += '<option value="' + t.id + '"' + (f.training === t.id ? ' selected' : '') + '>練習：' + t.name + '（' + tgt + '／経験値+' + t.xp + '／疲労' + (t.fatigue >= 0 ? '+' : '') + t.fatigue + '）</option>';
+          var on = curT.id === t.id;
+          html += '<button type="button" class="train-btn' + (on ? ' on' : '') + '" data-trainbtn="' + f.id + ':' + t.id + '" aria-pressed="' + (on ? 'true' : 'false') + '"><span class="train-name">' + esc(t.name) + '</span><span class="train-meta">' + tgt + '／経験値+' + t.xp + '／疲労' + (t.fatigue >= 0 ? '+' : '') + t.fatigue + '</span></button>';
         });
-        html += '</select>';
+        html += '</div>';
+        html += '<div class="train-desc">' + esc(curT.desc) + '。月の経験値（総量は今まで通り月2〜3）は、選んだ練習の能力に自動で入る。入りきらなかった分は下の経験値プールに残り、自由に割り振れる。</div></div>';
+        html += '<div class="fc-actions">';
         html += '<span class="xp-pill">経験値 <span class="num">' + f.xp + '</span></span>';
         html += '<button class="btn btn-small" data-detail="' + f.id + '">' + (selectedFighter === f.id ? '能力を閉じる' : '能力を割り振る') + '</button>';
         html += '<button class="btn btn-small" data-rename="' + f.id + '">名前を変更</button>';
@@ -2013,9 +2034,12 @@
         html += '</article>';
       });
       wrap.innerHTML = html;
-      var sels = wrap.querySelectorAll('[data-training]');
-      for (var i = 0; i < sels.length; i++) sels[i].addEventListener('change', function () {
-        var f = getFighter(this.getAttribute('data-training')); if (f) { f.training = this.value; saveGame(); }
+      var tbts = wrap.querySelectorAll('[data-trainbtn]');
+      for (var ti = 0; ti < tbts.length; ti++) tbts[ti].addEventListener('click', function () {
+        var parts = this.getAttribute('data-trainbtn').split(':');
+        var f = getFighter(parts[0]); if (!f) return;
+        f.training = parts[1]; saveGame(); renderFighters();
+        toast(f.name + 'の練習を「' + trainingOf(f).name + '」に切り替えた');
       });
       var dets = wrap.querySelectorAll('[data-detail]');
       for (var j = 0; j < dets.length; j++) dets[j].addEventListener('click', function () {
