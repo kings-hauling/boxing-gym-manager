@@ -705,7 +705,7 @@
         </div>
 
         <div id="trainerSection" hidden>
-          <h2 class="sec">トレーナー <span class="sec-note">引退した先輩の「継承」と、商店でスカウトした専属トレーナー。どちらも育つ速さを後押しする（素質の上限は上がらない）</span></h2>
+          <h2 class="sec">トレーナー <span class="sec-note">引退した先輩の「継承」と、商店でスカウトした専属トレーナー。継承トレーナーの指導力は現役時代の★と実績で変わり、努力で登り詰めた選手ほど名指導者になる（素質の上限は上がらない）</span></h2>
           <div id="trainerList"></div>
         </div>
 
@@ -724,7 +724,7 @@
         <p class="lead">毎月、入門希望者3人がジムを訪れる。顔つき・階級・タイプ（ファイター／アウトボクサーなど）・実績・背景（生い立ちや前歴）をよく見て、気に入った選手がいれば契約金を払って迎え入れる。下の「候補を比べる」表で3人を並べて比較できる。元日本ランカーの復帰組や有名ジムからの移籍組など、実績のある選手は最初から格上のランクでスタートする。候補は月が替わると入れ替わる。再スカウト（候補の入れ替え）は1回20万円。</p>
         <div class="panel" style="margin-bottom:14px;">
           <div class="rates">
-            出現率（公開）：★1 45% ／ ★2 32% ／ ★3 15% ／ ★4 6% ／ ★5 2%（★の抽選は合計100%）／ 天才は★の抽選とは別に候補1人あたり1%で判定され、当たると★5級の天才として登場する（素質の上限が軒並み高い。契約金は800万円）<br />
+            出現率（公開）：★1 45% ／ ★2 32% ／ ★3 15% ／ ★4 6% ／ ★5 2%（★の抽選は合計100%）／ 天才は★の抽選とは別に候補1人あたり1%で判定され、当たると★5級の天才として登場する（素質の上限が軒並み高く、初期能力も高めで、練習・試合でもらえる経験値も通常より多い。契約金は800万円）<br />
             在籍枠：<b id="scoutCapText"></b>（初期は2人。枠は商店の「ジム拡張」でポイントを使って段階的に増やせる）　／　再スカウト（候補の入れ替え）は1回20万円、何回でも可
           </div>
         </div>
@@ -747,7 +747,7 @@
         <h2 class="sec">プレミアム商店</h2>
         <div class="panel" style="margin-bottom:14px;">
           <div style="font-weight:900;font-size:1.05rem;">所持ポイント：<span class="num" id="shopPoints">0</span> pt</div>
-          <p class="lead" style="margin:6px 0 0;">この商店で買えるのは<b>「育つ速さ」「資金」「ジムの広さ（選手枠）」「トレーナーの指導力」だけ</b>です。<b>選手の素質の上限は、課金でも一切超えられません。</b>特訓アイテムは経験値を増やすだけ――能力が上限に達した選手は、それ以上は伸びません。ポイントは、目標マッチ勝利（+20pt）・タイトル獲得（+50pt）・ジムの格アップ（+30pt）でも無料でもらえます。</p>
+          <p class="lead" style="margin:6px 0 0;">この商店で買えるのは<b>「育つ速さ」「資金」「ジムの広さ（選手枠）」「トレーナーの指導力」だけ</b>です。<b>選手の素質の上限そのものは、課金では上がりません。</b>上限を超える「限界突破」は、練習と試合で貯めた経験値を大量に注ぐ努力専用の道で、特訓アイテム（経験値+3）程度では到底届きません。ポイントは、目標マッチ勝利（+20pt）・タイトル獲得（+50pt）・ジムの格アップ（+30pt）でも無料でもらえます。</p>
         </div>
         <h2 class="sec">アイテム <span class="sec-note">特訓アイテムの対象選手はここで選ぶ</span></h2>
         <div class="panel" style="margin-bottom:12px;">
@@ -1134,6 +1134,23 @@
     /* 天才：候補1人あたり1%で出現する★5級の逸材。素質の上限が軒並み高い代わりに契約金は高額。
        上限はゲーム全体の上限（99）の内側に収め、強さのカーブ自体は変えない */
     var GENIUS_RATE = 0.01;
+    /* 努力の天才：★1・★2の中にごく稀にいる大器晩成型。素質の上限近くまで努力で伸ばし切ると、
+       ある月を境に覚醒して★4相当の素質が開花する（隠し素質。確率は公開しない） */
+    var AWAKEN_RATE = 0.04;
+    function checkAwakening(f) {
+      if (!f.lateBloomer || f.awakened) return;
+      var capSum = 0, statSum = 0;
+      STATS.forEach(function (s) { capSum += Math.min(f.caps[s.key], breakCeil(f)); statSum += f.stats[s.key]; });
+      if (statSum < capSum * 0.92) return; // 実効上限の9割超まで努力で到達した時だけ開花する
+      f.awakened = true;
+      f.star = 4;
+      var bestKey = STATS.map(function (s) { return { key: s.key, v: f.stats[s.key] }; }).sort(function (a, b) { return b.v - a.v; })[0].key;
+      STATS.forEach(function (s) {
+        f.caps[s.key] = clamp(90 + irnd(-4, 8) + (s.key === bestKey ? 6 : 0), f.stats[s.key], 99);
+      });
+      addLog('★★ 覚醒 ★★ ' + f.name + 'が、長年の努力の果てに覚醒した！ 素質の壁を努力でこじ開け、★4相当の才能が一気に開花した。ジム中がどよめいている。', true);
+      toast(f.name + ' が覚醒！ ★4相当に開花');
+    }
     var GENIUS_COST = 800;
     function signCost(c) { return c.genius ? GENIUS_COST : SIGN_COST[c.star]; }
     function applyGenius(f) {
@@ -1147,7 +1164,7 @@
       var specialty = pick(STATS).key;
       STATS.forEach(function (s) {
         f.caps[s.key] = clamp(93 + irnd(0, 5) + (s.key === specialty ? 3 : 0), 90, 99);
-        f.stats[s.key] = clamp(Math.max(f.stats[s.key], 20 + irnd(0, 10) + (s.key === specialty ? 5 : 0)), 5, f.caps[s.key]);
+        f.stats[s.key] = clamp(Math.max(f.stats[s.key], 28 + irnd(0, 10) + (s.key === specialty ? 6 : 0)), 5, f.caps[s.key]);
       });
       f.faceIdx = pickFaceIdx('genius', f.age);
       return f;
@@ -1281,6 +1298,21 @@
         if (typeof G.funds !== 'number') G.funds = 0;
         // 世界ベルト（追加フィールド）の移行：旧セーブには無いので、保持者64人を補完してから引き継ぐ
         ensureChamps();
+        if (!G.balanceV2) {
+          G.balanceV2 = true;
+          // バランス改定の移行：NPC世界王者は新しい強さカーブで能力を作り直す（自ジム選手が保持するベルトはそのまま）
+          ORGS.forEach(function (org) {
+            WEIGHTS.forEach(function (w) {
+              var c = G.champs[beltKey(org, w)];
+              if (c && !c.holderId) { var o = makeOpponent(8, true); STATS.forEach(function (s) { c.stats[s.key] = o.stats[s.key]; }); }
+            });
+          });
+          // 既存選手の素質上限が新基準の下限を下回る場合はそこまで引き上げる（下げることはしない）
+          G.fighters.forEach(function (f) {
+            var floor = [0, 46, 60, 74, 86, 93][f.star] || 0;
+            STATS.forEach(function (s) { if (f.caps[s.key] < floor) f.caps[s.key] = floor; });
+          });
+        }
         G.fighters.forEach(function (f) {
           ensureFighterBelts(f);
           // 旧仕様で世界王者（最高ランク）にいた選手は、その階級の空いている団体の王者として引き継ぐ
@@ -1332,7 +1364,7 @@
       return 1;
     }
     function makeFighter(star) {
-      var capBase = [0, 42, 54, 66, 80, 95][star];
+      var capBase = [0, 50, 64, 78, 90, 97][star];
       var bg = pickBackground(star);
       var fid = 'f' + Math.random().toString(36).slice(2, 9);
       var f = {
@@ -1368,12 +1400,13 @@
         var bgCap = bg.caps[s.key] || 0;
         var bgStat = bg.stats[s.key] || 0;
         f.caps[s.key] = clamp(capBase + irnd(-4, 8) + (s.key === specialty ? 6 : 0) + bgCap, 20, 99);
-        f.stats[s.key] = clamp(12 + star * 2 + irnd(0, 8) + (s.key === specialty ? 5 : 0) + bgStat, 5, f.caps[s.key]);
+        f.stats[s.key] = clamp(12 + star * 3 + irnd(0, 8) + (s.key === specialty ? 5 : 0) + bgStat, 5, f.caps[s.key]);
       });
+      if ((star === 1 || star === 2) && Math.random() < AWAKEN_RATE) f.lateBloomer = true; // 努力の天才の素質（本人も周囲もまだ知らない）
       return f;
     }
     function makeOpponent(tierIdx, isTitle) {
-      var base = 20 + tierIdx * 7 + (isTitle ? 9 : 0);
+      var base = 13 + Math.round(tierIdx * 5.5) + (isTitle ? 5 : 0);
       var oid = 'o' + Math.random().toString(36).slice(2, 9);
       var o = { id: oid, faceSeed: hashSeed(oid + String(Math.random())), faceIdx: irnd(0, 15), age: irnd(20, 33), name: pick(SURNAMES) + ' ' + pick(GIVEN), weight: '', style: pick(STYLES), stats: {}, tier: tierIdx, isTitle: !!isTitle, nat: '' };
       o.wins = Math.max(0, Math.round(tierIdx * 2.2 + rnd(0, 7) + (isTitle ? 5 : 0)));
@@ -1576,6 +1609,7 @@
         champs: {}, // 世界ベルト保持者（「団体|階級」→ 王者）。ensureChamps()で64本分が埋まる
         lastEvent: null, // 直近の月次ランダムイベント
         points: 30, // プレミアム商店のポイント（お試し分つき）
+        balanceV2: true, // バランス改定（★到達ペース調整・限界突破・覚醒）適用済みセーブの印
         usedCodes: [], // 使用済みコードの照合ハッシュ
         xpBoost: 0, // 経験値ブーストの残り月数
         gradeMilestone: 0, // 格アップの無料ポイント配布済み位置
@@ -1759,18 +1793,44 @@
       }
     }
 
+    /* 限界突破の天井：★1・★2は努力でも届く範囲に天井がある（東洋太平洋〜世界ランカー級）。
+       ★3以上はゲーム全体の上限99まで伸ばせる */
+    var BREAK_CEIL = [0, 52, 55, 99, 99, 99];
+    function breakCeil(f) { return BREAK_CEIL[f.star] || 99; }
+    /* 能力を+1するのに必要な経験値。収入の数値（練習 月2〜3／試合 勝ち2・負け引分1）は変えず、
+       「届き方」の側で調整する：今の能力が高いほど重く、★が高い選手ほど同じ経験値で伸びる（素質＝伸びの効率）。
+       素質の上限を超える『限界突破』は割増コスト。ただし上限が低い選手ほど割増は緩やかで、努力が報われる */
     function statCost(f, key) {
-      // 成長はゆっくり：経験値1で能力+1（1対1）。速く育てたい場合はトレーナーで経験値の入りを増やす
-      return 1;
+      var v = f.stats[key];
+      var band = v < 35 ? 1 : (v < 55 ? 1.6 : (v < 70 ? 2.6 : (v < 85 ? 3.6 : 4.6)));
+      if (v >= f.caps[key]) {
+        var om = [0, 0.55, 0.8, 1, 1, 1][f.star] || 1;
+        return Math.max(1, Math.round((band + 2) * om));
+      }
+      var mul = [0, 1.3, 1.15, 1.34, 0.75, 0.45][f.star] || 1;
+      return Math.max(1, Math.round(band * mul));
     }
     /* トレーナーの育成ボーナス（月あたりの練習経験値）。無料の継承トレーナーは在籍で+1、
        商店スカウトの専属トレーナーは1人ごとに +1〜+2。合計は月+2まで（素質の上限は上がらない） */
+    /* トレーナーの質：選手時代の★が多いほど名トレーナー（指導力2）になりやすい。
+       ★1・★2でも、限界突破やタイトル獲得など「努力で登り詰めた」実績がある選手は指導者として高く評価される */
+    function trainerQualityFor(p) {
+      var chance = [0, 0.25, 0.3, 0.45, 0.65, 0.85][p.star] || 0.3;
+      if (p.star <= 2) {
+        if (p.brokeThrough) chance += 0.25; // 素質の上限を超えて戦った努力は、教える力になる
+        if (p.titlesWon > 0) chance += 0.25;
+        if (p.tier >= 6) chance += 0.2;
+        if ((p.wins || 0) + (p.losses || 0) >= 60) chance += 0.15;
+      }
+      return Math.random() < chance ? 2 : 1;
+    }
     function trainerXpBonus() {
       if (!G) return 0;
-      var bonus = 0;
-      if (G.trainers && G.trainers.length > 0) bonus += 1;
-      if (G.paidTrainers) G.paidTrainers.forEach(function (t) { bonus += (t.xp || 1); });
-      return Math.min(2, bonus);
+      var freeBest = 0;
+      if (G.trainers) G.trainers.forEach(function (t) { freeBest = Math.max(freeBest, t.xp || 1); }); // 継承トレーナーは一番の名伯楽の分が効く
+      var paid = 0;
+      if (G.paidTrainers) G.paidTrainers.forEach(function (t) { paid += (t.xp || 1); });
+      return Math.min(2, freeBest + paid);
     }
 
     function renderFighters() {
@@ -1822,11 +1882,11 @@
             var pct = Math.round(v / 99 * 100), capPct = Math.round(cap / 99 * 100);
             html += '<div class="stat-row"><span class="stat-name">' + s.name + '</span>';
             html += '<div class="stat-track"><div class="stat-fill" style="width:' + pct + '%"></div><div class="stat-capmark" style="left:' + capPct + '%"></div></div>';
-            html += '<span class="stat-val num">' + v + ' <span class="cap">/ 上限' + cap + '</span></span>';
-            html += '<button class="stat-plus" data-plus="' + f.id + ':' + s.key + '" ' + ((f.xp < cost || v >= cap) ? 'disabled' : '') + ' title="経験値' + cost + 'で+1">+</button>';
+            html += '<span class="stat-val num">' + v + ' <span class="cap">/ 上限' + cap + '</span>' + (v > cap ? ' <span class="cap" style="color:var(--red);font-weight:900;">限界突破+' + (v - cap) + '</span>' : '') + '</span>';
+            html += '<button class="stat-plus" data-plus="' + f.id + ':' + s.key + '" ' + ((f.xp < cost || v >= breakCeil(f)) ? 'disabled' : '') + ' title="経験値' + cost + 'で+1">+</button>';
             html += '</div>';
           });
-          html += '<div style="font-size:.74rem;color:var(--ink-soft);">バーの黒い線がその選手の素質の上限。+ボタンで経験値1を消費して能力を+1上げる。練習では月2〜3、試合では約2しか入らないので、成長はゆっくりだ。</div>';
+          html += '<div style="font-size:.74rem;color:var(--ink-soft);">バーの黒い線がその選手の素質の上限。+ボタンで経験値を消費して能力を+1上げる（必要な経験値は今の能力と★で変わる：能力が高いほど重く、★が高い選手ほど伸びが速い）。上限を超えて上げる「限界突破」は割増コストで、★1・★2には努力でも届く範囲（東洋太平洋〜世界ランカー級）の天井がある。練習では月2〜3、試合では約2しか入らないので、成長はゆっくりだ。</div>';
           html += '</div>';
         }
         html += '</article>';
@@ -1872,7 +1932,8 @@
         var parts = this.getAttribute('data-plus').split(':');
         var f = getFighter(parts[0]); if (!f) return;
         var key = parts[1], cost = statCost(f, key);
-        if (f.xp >= cost && f.stats[key] < f.caps[key]) {
+        if (f.xp >= cost && f.stats[key] < breakCeil(f)) {
+          if (f.stats[key] >= f.caps[key]) f.brokeThrough = true; // 限界突破の実績（トレーナー転身時の評価にも使う）
           f.xp -= cost; f.stats[key] += 1;
           renderFighters(); renderActionBar();
           saveGame();
@@ -1932,6 +1993,7 @@
         html += '<div class="retire-card">' + faceHtml(p, 'face-md') + '<div class="rt-main">';
         html += '<span class="rt-name">' + esc(p.name) + '</span> ' + starsHtml(p.star) + (gen >= 2 ? ' <span class="gen-badge">第' + gen + '世代</span>' : '');
         html += '<div class="rt-meta">現役通算 ' + p.wins + '勝' + p.losses + '敗（' + p.ko + 'KO）／最高ランク ' + TIERS[p.tier].name + (p.titlesWon ? '／タイトル ' + p.titlesWon + '度獲得' : '') + '／' + p.age + '歳で引退</div>';
+        if (typeof p.trainerXp === 'number') html += '<div class="rt-meta">トレーナー適性：' + (p.trainerXp >= 2 ? '名伯楽クラス（指導力が高く、練習経験値ボーナスが大きい）' : '堅実な指導者') + (p.star <= 2 && p.trainerXp >= 2 ? ' ―― ★の低さを努力で覆した選手は、指導者として高く評価される' : '') + '</div>';
         html += '<div class="rt-btns">';
         html += '<button class="btn btn-small" data-retire="trainer:' + i + '"' + (G.trainers.length >= 5 ? ' disabled' : '') + '>トレーナーとして迎える（継承）</button>';
         html += '<button class="btn btn-small btn-red" data-retire="rebirth:' + i + '"' + (G.fighters.length >= rosterCap() ? ' disabled' : '') + '>転生して再入門（第' + (gen + 1) + '世代）</button>';
@@ -1955,7 +2017,8 @@
       if (mode === 'trainer') {
         if (G.trainers.length >= 5) { toast('トレーナーは5人までです'); return; }
         G.pendingRetire.splice(idx, 1);
-        G.trainers.push({ name: p.name, faceIdx: p.faceIdx, age: p.age, wins: p.wins, losses: p.losses, ko: p.ko, titlesWon: p.titlesWon, tier: p.tier, specialty: p.specialty, retireYear: G.year, gen: p.gen || 1 });
+        var txp = (typeof p.trainerXp === 'number' ? p.trainerXp : trainerQualityFor(p));
+        G.trainers.push({ name: p.name, faceIdx: p.faceIdx, age: p.age, wins: p.wins, losses: p.losses, ko: p.ko, titlesWon: p.titlesWon, tier: p.tier, specialty: p.specialty, retireYear: G.year, gen: p.gen || 1, star: p.star, xp: txp, effortCoach: !!(p.star <= 2 && txp >= 2) });
         addLog(p.name + 'がトレーナーとしてジムに残ることになった。戦績は' + p.wins + '勝' + p.losses + '敗' + p.ko + 'KO。現役時代の経験が、これからは後輩の力になる。', true);
         toast(p.name + ' がトレーナーに就任（継承）');
       } else if (mode === 'rebirth') {
@@ -2003,9 +2066,9 @@
       free.forEach(function (t) {
         var specName = (STATS.filter(function (s) { return s.key === t.specialty; })[0] || {}).name || '';
         html += '<div class="trainer-card">' + faceHtml(t, 'face-md') + '<div>';
-        html += '<span class="tr-name">' + esc(t.name) + ' トレーナー</span>' + (t.gen >= 2 ? ' <span class="gen-badge">第' + t.gen + '世代</span>' : '');
-        html += '<div class="tr-meta">現役通算 ' + t.wins + '勝' + t.losses + '敗（' + t.ko + 'KO）／最高ランク ' + TIERS[t.tier].name + (t.titlesWon ? '／タイトル ' + t.titlesWon + '度獲得' : '') + '／' + t.retireYear + '年目に引退（継承・無料）</div>';
-        html += '<div class="tr-bonus">育成ボーナス：全選手の練習経験値 +1／月・コンディション +1／月（トレーナーボーナスは他のトレーナーと合わせて月+2まで）。得意だった「' + specName + '」の指導が行き届く。</div>';
+        html += '<span class="tr-name">' + esc(t.name) + ' トレーナー</span>' + (t.gen >= 2 ? ' <span class="gen-badge">第' + t.gen + '世代</span>' : '') + ((t.xp || 1) >= 2 ? ' <span class="genius-badge">名伯楽</span>' : '') + (t.effortCoach ? ' <span class="gen-badge">努力型の名指導者</span>' : '');
+        html += '<div class="tr-meta">現役通算 ' + t.wins + '勝' + t.losses + '敗（' + t.ko + 'KO）／最高ランク ' + TIERS[t.tier].name + (t.titlesWon ? '／タイトル ' + t.titlesWon + '度獲得' : '') + (t.star ? '／現役時代 ★' + t.star : '') + '／' + t.retireYear + '年目に引退（継承・無料）</div>';
+        html += '<div class="tr-bonus">育成ボーナス：全選手の練習経験値 +' + (t.xp || 1) + '／月（トレーナーボーナスは他のトレーナーと合わせて月+2まで。継承トレーナーは一番指導力の高い1人の分が効く）。得意だった「' + specName + '」の指導が行き届く。</div>';
         html += '</div></div>';
       });
       paid.forEach(function (t) {
@@ -2429,7 +2492,7 @@
       if (counterKey && oppEff[counterKey] != null) oppEff[counterKey] = Math.max(5, Math.round(oppEff[counterKey] * 0.82));
       return {
         round: 0, totalRounds: TIERS[f.tier].rounds,
-        perfF: (1 - f.fatigue / 260) * (0.78 + ((typeof f.cond === 'number' ? f.cond : 70)) / 450), perfO: 1,
+        perfF: (1 - f.fatigue / 300) * (0.84 + ((typeof f.cond === 'number' ? f.cond : 70)) / 560), perfO: 1,
         startCond: (typeof f.cond === 'number' ? f.cond : 70),
         hpMaxF: 60 + eff(f, 'sta') * 1.1 + eff(f, 'hrt') * 0.5,
         hpMaxO: 60 + oppEff.sta * 1.1 + oppEff.hrt * 0.5,
@@ -3027,6 +3090,7 @@
         fanGain = 5;
         label = f.name + ' 引き分け';
       }
+      if (f.genius) gainXp += 1; // 天才は試合からも多くを学ぶ
       f.rankPt += rankGain;
       f.xp += gainXp;
       f.fatigue = clamp(f.fatigue + 28, 0, 100);
@@ -3105,7 +3169,9 @@
           if (m.belt.kind === 'challenge') {
             var defChamp = G.champs[beltKey(bOrg, bWeight)];
             if (defChamp && !defChamp.holderId) defChamp.wins++; // 王者は防衛成功として戦績を積む
-            addLog(f.name + 'の' + bOrg + '世界王座挑戦は実らなかった。王者' + (defChamp ? defChamp.name : '') + 'は防衛に成功。', true);
+            // 世界挑戦に敗れたら、挑戦権は遠のく：世界ランカーとしてランクptを積み直してから再挑戦になる
+            if (f.tier <= 7) { f.rankPt = Math.min(f.rankPt, TIERS[7].need); detail += '／挑戦権は遠のき、ランクptを積み直し'; }
+            addLog(f.name + 'の' + bOrg + '世界王座挑戦は実らなかった。王者' + (defChamp ? defChamp.name : '') + 'は防衛に成功。挑戦権は遠のき、世界ランカーとして出直しになる。', true);
           } else {
             var loseOrg = m.belt.kind === 'unify' ? m.belt.ownOrg : bOrg;
             removeBelt(f, loseOrg, bWeight);
@@ -3173,6 +3239,7 @@
       var e = mealEffect();
       // 練習
       G.fighters.forEach(function (f) {
+        checkAwakening(f);
         if (typeof f.cond !== 'number') f.cond = 70;
         if (f.injured > 0) {
           // 休場中は治療と静養：疲労が抜け、コンディションは少しずつ戻る
@@ -3186,7 +3253,7 @@
           return;
         }
         var t = TRAININGS.filter(function (x) { return x.id === f.training; })[0];
-        var xpGain = t.xp + e.xp + trainerXpBonus(); // 練習は月2〜3。トレーナーがいると最大+2まで底上げ
+        var xpGain = t.xp + e.xp + trainerXpBonus() + (f.genius ? 1 : 0); // 練習は月2〜3。トレーナーがいると最大+2まで底上げ。天才は飲み込みが速く+1
         if (G.xpBoost > 0) xpGain += 1; // 商店の経験値ブースト
         if (f.fatigue >= 85 && t.id !== 'rest') xpGain = Math.floor(xpGain / 2); // 疲労困憊では伸びない
         f.xp += Math.max(0, xpGain);
@@ -3240,7 +3307,7 @@
           if (f.wins >= 5 || f.titlesWon > 0 || f.tier >= 3) {
             var statsCopy = {};
             STATS.forEach(function (s) { statsCopy[s.key] = f.stats[s.key]; });
-            G.pendingRetire.push({ name: f.name, faceIdx: f.faceIdx, age: f.age, wins: f.wins, losses: f.losses, ko: f.ko, titlesWon: f.titlesWon, tier: f.tier, specialty: bestKey, style: f.style, weight: f.weight, star: f.star, stats: statsCopy, gen: f.gen || 1, genius: !!f.genius });
+            G.pendingRetire.push({ name: f.name, faceIdx: f.faceIdx, age: f.age, wins: f.wins, losses: f.losses, ko: f.ko, titlesWon: f.titlesWon, tier: f.tier, specialty: bestKey, style: f.style, weight: f.weight, star: f.star, stats: statsCopy, gen: f.gen || 1, genius: !!f.genius, brokeThrough: !!f.brokeThrough, trainerXp: trainerQualityFor(f) });
             addLog(f.name + '（' + f.age + '歳）が引退を迎えた。実績を残した選手だ。ジムのタブで進路（トレーナー／転生／引退）を選ぼう。戦績は' + f.wins + '勝' + f.losses + '敗' + f.ko + 'KO。', true);
             toast(f.name + ' が引退。進路を選べます');
           } else {
