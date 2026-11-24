@@ -298,6 +298,42 @@
       .start-form { margin-top: 16px; display: flex; gap: 8px; flex-wrap: wrap; }
       .start-form input { flex: 1 1 220px; min-width: 0; font-size: 1.05rem; font-weight: 700; padding: 10px 12px; }
       .start-form .btn { font-size: 1.02rem; padding: 10px 22px; }
+      .rename-form { margin-top: 14px; display: flex; gap: 8px; flex-wrap: wrap; }
+      .rename-form .rename-field { flex: 1 1 130px; min-width: 0; }
+      .rename-form label { display: block; font-size: .78rem; font-weight: 700; color: var(--ink-soft); margin-bottom: 4px; }
+      .rename-form input { width: 100%; box-sizing: border-box; font-size: 1.05rem; font-weight: 700; padding: 10px 12px; }
+      .genius-badge { display: inline-block; background: var(--gold); color: #fff; font-weight: 900; font-size: .74rem; padding: 2px 10px; border-radius: 999px; vertical-align: middle; }
+      .gen-badge { display: inline-block; background: var(--panel2); color: var(--gold); border: 1.5px solid var(--gold); font-weight: 900; font-size: .74rem; padding: 1px 9px; border-radius: 999px; vertical-align: middle; }
+      .retire-card { display: flex; gap: 12px; align-items: flex-start; background: var(--panel); border: 2px solid var(--gold); border-radius: 12px; padding: 12px; margin-bottom: 10px; }
+      .retire-card .rt-main { flex: 1; min-width: 0; }
+      .retire-card .rt-name { font-weight: 900; font-size: 1rem; }
+      .retire-card .rt-meta { font-size: .78rem; color: var(--ink-soft); line-height: 1.6; margin-top: 2px; }
+      .retire-card .rt-btns { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+      /* ---------- 世界ベルト（4団体×16階級） ---------- */
+      .belts-row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 8px; }
+      .belts-label { font-size: .74rem; font-weight: 900; color: var(--gold); }
+      .belt-chip { display: inline-flex; align-items: center; color: #fff; font-weight: 900; font-size: .74rem; padding: 3px 10px; border-radius: 999px; }
+      .belt-chip.org-WBA { background: #2e2a26; }
+      .belt-chip.org-WBC { background: #1e7a3c; }
+      .belt-chip.org-IBF { background: #2456a6; }
+      .belt-chip.org-WBO { background: #b3232a; }
+      .belt-ico { display: inline-block; width: 17px; height: 6px; border-radius: 2px; margin-right: 6px; background: linear-gradient(180deg, #f6d873, #d9a92e 55%, #a97b12); border: 1px solid rgba(0,0,0,.45); flex: none; }
+      .belt-ico.ico-sash { transform: rotate(-24deg); }
+      .unify-badge { display: inline-block; background: var(--gold); color: #fff; font-weight: 900; font-size: .74rem; padding: 2px 10px; border-radius: 999px; vertical-align: middle; }
+      .bf-belt { position: absolute; z-index: 4; pointer-events: none; border: 1.5px solid #6e4d05; border-radius: 5px; box-shadow: 0 1px 3px rgba(0,0,0,.4); background: linear-gradient(180deg, #f6d873, #d9a92e 55%, #a97b12); }
+      .bf-belt::after { content: ""; position: absolute; left: 50%; top: 50%; width: 14px; height: 14px; transform: translate(-50%, -50%); border-radius: 50%; background: radial-gradient(circle, #fff2c4 0 30%, #d9a92e 62%, #8a640c); border: 1.5px solid #6e4d05; }
+      .belt-waist { left: 15%; right: 15%; top: 56%; height: 13px; }
+      .belt-sash { left: -8%; top: 32%; width: 116%; height: 12px; transform: rotate(-22deg); }
+      .belt-sash2 { left: -8%; top: 32%; width: 116%; height: 12px; transform: rotate(22deg); }
+      .bf-belt-count { position: absolute; top: 2px; right: 2px; z-index: 6; background: var(--gold); color: #fff; font-size: .62rem; font-weight: 900; padding: 1px 7px; border-radius: 999px; pointer-events: none; }
+      .belt-book-wrap { margin: 0 0 16px; border: 1.5px solid var(--line); border-radius: var(--radius); background: var(--panel); padding: 4px 12px 10px; }
+      .belt-book-wrap summary { font-weight: 900; font-size: .92rem; cursor: pointer; min-height: 2.75rem; display: flex; align-items: center; }
+      .bb-row { display: flex; flex-wrap: wrap; gap: 4px 12px; padding: 7px 0; border-top: 1px dashed var(--line); font-size: .76rem; align-items: baseline; }
+      .bb-w { font-weight: 900; min-width: 118px; }
+      .bb-cell { color: var(--ink-soft); }
+      .bb-cell b { color: var(--ink); }
+      .bb-cell.own { color: var(--red); font-weight: 700; }
+      .bb-cell.own b { color: var(--red); }
       .howto { margin-top: 16px; font-size: .85rem; line-height: 1.85; color: var(--ink-soft); }
       .howto b { color: var(--ink); }
 
@@ -663,6 +699,11 @@
         <h2 class="sec">所属選手 <span class="sec-note">練習メニューと能力の割り振りは選手ごとに決める</span></h2>
         <div id="fighterList"></div>
 
+        <div id="retireSection" hidden>
+          <h2 class="sec">引退した選手の進路 <span class="sec-note">実績を残した選手は、トレーナーとして残すか、若い新人として転生させるか選べる</span></h2>
+          <div id="retireList"></div>
+        </div>
+
         <div id="trainerSection" hidden>
           <h2 class="sec">トレーナー（引退した先輩たち） <span class="sec-note">現役時代の経験が、後輩の育成を後押しする「継承」</span></h2>
           <div id="trainerList"></div>
@@ -683,7 +724,7 @@
         <p class="lead">毎月、入門希望者3人がジムを訪れる。顔つき・階級・タイプ（ファイター／アウトボクサーなど）・実績・背景（生い立ちや前歴）をよく見て、気に入った選手がいれば契約金を払って迎え入れる。下の「候補を比べる」表で3人を並べて比較できる。元日本ランカーの復帰組や有名ジムからの移籍組など、実績のある選手は最初から格上のランクでスタートする。候補は月が替わると入れ替わる。再スカウト（候補の入れ替え）は1回20万円。</p>
         <div class="panel" style="margin-bottom:14px;">
           <div class="rates">
-            出現率（公開）：★1 45% ／ ★2 32% ／ ★3 15% ／ ★4 6% ／ ★5 2%<br />
+            出現率（公開）：★1 45% ／ ★2 32% ／ ★3 15% ／ ★4 6% ／ ★5 2%（★の抽選は合計100%）／ 天才は★の抽選とは別に候補1人あたり1%で判定され、当たると★5級の天才として登場する（素質の上限が軒並み高い。契約金は800万円）<br />
             在籍枠：<b id="scoutCapText"></b>　／　再スカウト（候補の入れ替え）は1回20万円、何回でも可
           </div>
         </div>
@@ -741,6 +782,10 @@
       <section class="tabpage" id="page-log" hidden>
         <h2 class="sec">ジムの記録</h2>
         <div class="panel" id="recordPanel" style="margin-bottom:16px;"></div>
+        <details class="belt-book-wrap">
+          <summary>世界ベルト保持者一覧（WBA／WBC／IBF／WBO × 16階級 ＝ 64本）</summary>
+          <div id="beltBook"></div>
+        </details>
         <h2 class="sec">ジム日誌</h2>
         <ul class="log-list" id="logList"></ul>
         <h2 class="sec">セーブデータ</h2>
@@ -785,7 +830,12 @@
           ・毎月、ジムには小さな出来事（スポンサー、取材、風邪の流行など）が起こる。<br />
           ・ランクの節目では新人王戦やタイトルマッチなどの「目標マッチ」が組まれる。目標パネルで次の節目を確認しよう。<br />
           ・東洋太平洋や世界の舞台では、対戦相手に外国人選手が登場する。世界王座は外国人王者が守っている。<br />
-          ・引退した実績ある選手はトレーナーとしてジムに残り、後輩の育成にボーナスを与える（継承）。<br />
+          ・引退した実績ある選手は、トレーナーとしてジムに残す（継承）か、若い新人として生まれ変わらせる（転生）か選べる。転生は同じ顔・同じスタイルで、素質の一部と経験を引き継ぐ（上限そのものは上がらない）。世代を重ねると「第○世代」と表示される。<br />
+          ・選手カードの「名前を変更」から、所属選手の姓と名はいつでも変えられる。<br />
+          ・スカウトにはごくまれに「天才」が現れる（候補1人あたり1%）。素質の上限が軒並み高い逸材で、契約金は高め。<br />
+          ・世界タイトルは実在と同じ4団体（WBA／WBC／IBF／WBO）×16階級＝64本のベルト制。各ベルトに王者がいて、世界ランカーになると試合前ブリーフィングで挑戦する団体を選べる。<br />
+          ・世界王者になると、防衛戦に加えて他団体の王者との「統一戦」が選べる。勝てばベルトを複数保持でき、試合画面では1本目は腰に、2本目以降は肩に掛けて表示される。<br />
+          ・選手カードの「階級を変更」から階級を上げ下げでき、別の階級でもベルトを取れば多階級制覇として記録される。<br />
           ・商店ではポイントで特訓アイテムや資金パックが買える。目標マッチ勝利やタイトル獲得でも無料ポイントがもらえる。<br />
           ・進行状況はこの端末に自動保存されるので、閉じても続きから遊べる。最初からやり直したい時は「記録」タブのセーブデータ欄から消せる。
         </div>
@@ -798,6 +848,7 @@
         <h2>試合前ブリーフィング</h2>
         <p class="modal-sub">スカウトが集めた対戦相手の情報を見て、作戦と対策練習を決めてからゴングを鳴らそう。対策練習の効果はこの試合だけの一時的なものだ。</p>
         <div id="preFightBody"></div>
+        <div id="beltArea"></div>
         <h2 class="sec" style="margin-top:18px;">作戦を選ぶ</h2>
         <div class="plan-grid" id="tacticGrid"></div>
         <h2 class="sec" style="margin-top:18px;">対策練習を選ぶ <span class="sec-note">相手の強みに合わせて1つだけ。この試合だけ効く</span></h2>
@@ -875,6 +926,28 @@
         <p class="modal-sub" id="overText">資金が尽き、ジムは閉鎖された。</p>
         <div class="fight-btns">
           <button class="btn btn-red" id="restartBtn">新しいジムで再挑戦</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======= RENAME ======= -->
+    <div class="overlay" id="renameOverlay" hidden>
+      <div class="modal">
+        <h2>選手の名前を変更</h2>
+        <p class="modal-sub">新しい姓と名を入力してください。変更はすぐに反映され、セーブにも保存されます（過去の日誌に書かれた旧名はそのまま残ります）。</p>
+        <div class="rename-form">
+          <div class="rename-field">
+            <label for="renameLastInput">姓</label>
+            <input type="text" id="renameLastInput" maxlength="8" autocomplete="off" />
+          </div>
+          <div class="rename-field">
+            <label for="renameFirstInput">名</label>
+            <input type="text" id="renameFirstInput" maxlength="8" autocomplete="off" />
+          </div>
+        </div>
+        <div class="fight-btns">
+          <button class="btn" id="renameCancelBtn">やめる</button>
+          <button class="btn btn-red" id="renameOkBtn">この名前にする</button>
         </div>
       </div>
     </div>
@@ -990,6 +1063,8 @@
       { id: 'dorm', name: '選手寮', cost: 500, grade: 2, desc: '在籍枠 +3。住み込みで練習に集中できる。' }
     ];
     var WEIGHTS = ['ミニマム級', 'ライトフライ級', 'フライ級', 'スーパーフライ級', 'バンタム級', 'スーパーバンタム級', 'フェザー級', 'スーパーフェザー級', 'ライト級', 'スーパーライト級', 'ウェルター級', 'スーパーウェルター級', 'ミドル級', 'スーパーミドル級', 'ライトヘビー級', 'ヘビー級'];
+    /* 世界タイトル：実在と同じ4団体 × 16階級 ＝ 64本のベルト */
+    var ORGS = ['WBA', 'WBC', 'IBF', 'WBO'];
     var WEIGHT_LIMIT = { 'ミニマム級': '47.6kg以下', 'ライトフライ級': '48.9kg以下', 'フライ級': '50.8kg以下', 'スーパーフライ級': '52.1kg以下', 'バンタム級': '53.5kg以下', 'スーパーバンタム級': '55.3kg以下', 'フェザー級': '57.1kg以下', 'スーパーフェザー級': '58.9kg以下', 'ライト級': '61.2kg以下', 'スーパーライト級': '63.5kg以下', 'ウェルター級': '66.6kg以下', 'スーパーウェルター級': '69.8kg以下', 'ミドル級': '72.5kg以下', 'スーパーミドル級': '76.2kg以下', 'ライトヘビー級': '79.3kg以下', 'ヘビー級': '79.3kg超' };
     /* 選手の背景設定：実績・生い立ち・特徴。能力の上限と初期値にも少し効く */
     var BACKGROUNDS = [
@@ -1046,6 +1121,27 @@
     ];
     var SIGN_COST = { 1: 10, 2: 30, 3: 80, 4: 200, 5: 500 };
     var STAR_RATES = [[5, 0.02], [4, 0.06], [3, 0.15], [2, 0.32], [1, 0.45]];
+    /* 天才：候補1人あたり1%で出現する★5級の逸材。素質の上限が軒並み高い代わりに契約金は高額。
+       上限はゲーム全体の上限（99）の内側に収め、強さのカーブ自体は変えない */
+    var GENIUS_RATE = 0.01;
+    var GENIUS_COST = 800;
+    function signCost(c) { return c.genius ? GENIUS_COST : SIGN_COST[c.star]; }
+    function applyGenius(f) {
+      f.genius = true;
+      f.star = 5;
+      f.age = irnd(17, 20);
+      f.bgId = 'genius'; f.bgLabel = '天才'; f.bgTag = '10年に1人の逸材';
+      f.bgDetail = 'ジュニア時代から無敗を誇り、どのジムのスカウトも血眼で追ってきた本物の天才。パンチ、スピード、技、心、体、防御――どれを取っても天井知らずの素材で、あとは育て方ひとつで世界の頂点が見える。';
+      f.pastRecord = 'アマ戦績 24勝0敗（19KO）／ジュニア時代から無敗';
+      f.wins = 0; f.losses = 0; f.ko = 0; f.tier = 0; f.rankPt = 0; f.titlesWon = 0; f.rookieKing = false;
+      var specialty = pick(STATS).key;
+      STATS.forEach(function (s) {
+        f.caps[s.key] = clamp(93 + irnd(0, 5) + (s.key === specialty ? 3 : 0), 90, 99);
+        f.stats[s.key] = clamp(Math.max(f.stats[s.key], 20 + irnd(0, 10) + (s.key === specialty ? 5 : 0)), 5, f.caps[s.key]);
+      });
+      f.faceIdx = pickFaceIdx('genius', f.age);
+      return f;
+    }
     var PUNCHES = ['ジャブ', 'ワンツー', '右ストレート', '左フック', 'アッパー', 'ボディブロー', 'カウンターの右', '連打'];
     /* 選手タイプ（スタイル）の説明：スカウト比較と試合前の相手情報で使う */
     var TYPE_INFO = {
@@ -1156,6 +1252,7 @@
         if (!Array.isArray(G.fighters)) G.fighters = [];
         if (!Array.isArray(G.candidates)) G.candidates = [];
         if (!Array.isArray(G.trainers)) G.trainers = [];
+        if (!Array.isArray(G.pendingRetire)) G.pendingRetire = [];
         if (!Array.isArray(G.log)) G.log = [];
         if (!Array.isArray(G.usedCodes)) G.usedCodes = [];
         if (!G.facilities || typeof G.facilities !== 'object') G.facilities = {};
@@ -1163,6 +1260,24 @@
         if (typeof G.xpBoost !== 'number') G.xpBoost = 0;
         if (typeof G.gradeMilestone !== 'number') G.gradeMilestone = 0;
         if (typeof G.funds !== 'number') G.funds = 0;
+        // 世界ベルト（追加フィールド）の移行：旧セーブには無いので、保持者64人を補完してから引き継ぐ
+        ensureChamps();
+        G.fighters.forEach(function (f) {
+          ensureFighterBelts(f);
+          // 旧仕様で世界王者（最高ランク）にいた選手は、その階級の空いている団体の王者として引き継ぐ
+          if (f.tier >= 8 && f.belts.length === 0) {
+            var org = null;
+            for (var oi = 0; oi < ORGS.length; oi++) {
+              var cc = G.champs[beltKey(ORGS[oi], f.weight)];
+              if (!(cc && cc.holderId)) { org = ORGS[oi]; break; }
+            }
+            if (org) {
+              f.belts.push({ org: org, weight: f.weight });
+              f.beltWins.push({ org: org, weight: f.weight });
+              G.champs[beltKey(org, f.weight)] = champFromFighter(f);
+            }
+          }
+        });
         selectedFighter = (typeof data.selectedFighter === 'string' && data.selectedFighter) ? data.selectedFighter : (G.fighters[0] ? G.fighters[0].id : null);
         lastSavedAt = (typeof data.savedAt === 'number') ? data.savedAt : null;
         return true;
@@ -1216,7 +1331,10 @@
         wins: 0, losses: 0, draws: 0, ko: 0,
         training: 'normal',
         injured: 0, // 残り休場月数
-        titlesWon: 0
+        titlesWon: 0,
+        belts: [], // 現在保持している世界ベルト [{org, weight}]
+        beltWins: [], // これまでに獲得した世界ベルトの履歴（多階級制覇の判定用）
+        defenses: 0 // 世界王座の通算防衛回数
       };
       f.faceIdx = pickFaceIdx(bg.id, f.age);
       f.cond = irnd(62, 95); // コンディション（試合の調子に直結）
@@ -1265,6 +1383,104 @@
       });
       return o;
     }
+    /* ================= 世界ベルト（4団体×16階級＝64本） ================= */
+    /* G.champs['団体|階級'] に各ベルトの保持者を置く。自ジム外は生成された外国人王者、
+       自ジム選手が保持する場合は holderId に選手IDが入る。旧セーブには無い追加フィールドとして扱う */
+    function beltKey(org, weight) { return org + '|' + weight; }
+    function champFromOpponent(o) {
+      var c = { name: o.name, nat: o.nat || '', faceIdx: o.faceIdx, age: o.age, wins: o.wins, losses: o.losses, ko: o.ko, style: o.style, stats: {}, holderId: null };
+      STATS.forEach(function (s) { c.stats[s.key] = o.stats[s.key]; });
+      return c;
+    }
+    function champFromFighter(f) {
+      var c = { name: f.name, nat: '', faceIdx: f.faceIdx, age: f.age, wins: f.wins, losses: f.losses, ko: f.ko, style: f.style, stats: {}, holderId: f.id };
+      STATS.forEach(function (s) { c.stats[s.key] = f.stats[s.key]; });
+      return c;
+    }
+    function newNpcChamp() { return champFromOpponent(makeOpponent(8, true)); } // 強さは世界王者（tier8）のカーブのまま
+    function ensureChamps() {
+      if (!G) return;
+      if (!G.champs || typeof G.champs !== 'object') G.champs = {};
+      ORGS.forEach(function (org) {
+        WEIGHTS.forEach(function (w) {
+          var k = beltKey(org, w);
+          if (!G.champs[k] || !G.champs[k].stats) G.champs[k] = newNpcChamp();
+        });
+      });
+    }
+    function champOpponent(c) {
+      var o = { id: 'champ', faceSeed: 0, faceIdx: c.faceIdx, age: c.age, name: c.name, weight: '', style: c.style, stats: {}, tier: 8, isTitle: true, nat: c.nat || '' };
+      STATS.forEach(function (s) { o.stats[s.key] = c.stats[s.key]; });
+      o.wins = c.wins; o.losses = c.losses; o.ko = c.ko;
+      return o;
+    }
+    function ensureFighterBelts(f) {
+      if (!f) return;
+      if (!Array.isArray(f.belts)) f.belts = [];
+      if (!Array.isArray(f.beltWins)) f.beltWins = [];
+      if (typeof f.defenses !== 'number') f.defenses = 0;
+    }
+    function beltsInWeight(f, weight) {
+      ensureFighterBelts(f);
+      return f.belts.filter(function (b) { return b.weight === weight; });
+    }
+    function divisionsOf(f) {
+      ensureFighterBelts(f);
+      var seen = {};
+      f.beltWins.forEach(function (b) { seen[b.weight] = true; });
+      return Object.keys(seen).length;
+    }
+    function awardBelt(f, org, weight) {
+      ensureChamps(); ensureFighterBelts(f);
+      if (!f.belts.some(function (b) { return b.org === org && b.weight === weight; })) f.belts.push({ org: org, weight: weight });
+      if (!f.beltWins.some(function (b) { return b.org === org && b.weight === weight; })) f.beltWins.push({ org: org, weight: weight });
+      G.champs[beltKey(org, weight)] = champFromFighter(f);
+    }
+    function removeBelt(f, org, weight) {
+      ensureFighterBelts(f);
+      f.belts = f.belts.filter(function (b) { return !(b.org === org && b.weight === weight); });
+    }
+    function syncChampFromFighter(f, org, weight) {
+      ensureChamps();
+      G.champs[beltKey(org, weight)] = champFromFighter(f);
+    }
+    /* 自ジム選手が保持していない団体（挑戦できる団体）の先頭を返す。全て自ジム保持なら null */
+    function defaultChallengeOrg(f) {
+      ensureChamps();
+      for (var i = 0; i < ORGS.length; i++) {
+        var c = G.champs[beltKey(ORGS[i], f.weight)];
+        if (!(c && c.holderId)) return ORGS[i];
+      }
+      return null;
+    }
+    function beltLabelFor(m) {
+      if (!m || !m.belt) return '';
+      if (m.belt.kind === 'challenge') return m.belt.org + '世界タイトルマッチ（' + m.belt.weight + '）';
+      if (m.belt.kind === 'unify') return '世界王座統一戦（' + m.belt.weight + ' ' + m.belt.ownOrg + ' vs ' + m.belt.org + '）';
+      return m.belt.org + '世界王座防衛戦（' + m.belt.weight + '）';
+    }
+    /* 試合画面の全身像に重ねるベルト表示：1本目は腰、2本目以降は肩掛け */
+    function beltOverlayHtml(count) {
+      if (!count || count <= 0) return '';
+      var h = '<div class="bf-belt belt-waist" aria-hidden="true"></div>';
+      if (count >= 2) h += '<div class="bf-belt belt-sash" aria-hidden="true"></div>';
+      if (count >= 3) h += '<div class="bf-belt belt-sash2" aria-hidden="true"></div>';
+      h += '<div class="bf-belt-count">ベルト' + count + '本</div>';
+      return h;
+    }
+    /* 選手カードの保持ベルト表示：1本目は腰ベルトのアイコン、2本目以降は肩掛けのアイコンで並べる */
+    function beltsHtml(f) {
+      ensureFighterBelts(f);
+      if (!f.belts.length) return '';
+      var h = '<div class="belts-row"><span class="belts-label">世界ベルト保持</span>';
+      f.belts.forEach(function (b, i) {
+        h += '<span class="belt-chip org-' + b.org + '"><i class="belt-ico ' + (i === 0 ? 'ico-waist' : 'ico-sash') + '"></i>' + b.org + ' ' + esc(b.weight) + '</span>';
+      });
+      if (f.defenses > 0) h += '<span style="font-size:.74rem;color:var(--ink-soft);">通算防衛 ' + f.defenses + '度</span>';
+      h += '</div>';
+      return h;
+    }
+
     /* 相手の能力傾向：最強・最弱の能力と傾向コメントを返す */
     function statKeyByName(name) { var s = STATS.filter(function (x) { return x.name === name; })[0]; return s ? s.key : null; }
     function oppTendency(o) {
@@ -1322,6 +1538,8 @@
         facilities: {},
         card: null, // 今月の興行カード
         trainers: [], // 引退後もジムに残る先輩トレーナー（継承）
+        pendingRetire: [], // 引退が決まり、進路（トレーナー／転生／引退）の選択待ちの選手
+        champs: {}, // 世界ベルト保持者（「団体|階級」→ 王者）。ensureChamps()で64本分が埋まる
         lastEvent: null, // 直近の月次ランダムイベント
         points: 30, // プレミアム商店のポイント（お試し分つき）
         usedCodes: [], // 使用済みコードの照合ハッシュ
@@ -1335,13 +1553,17 @@
       G.fighters.push(a, b);
       selectedFighter = a.id;
       refreshCandidates();
+      ensureChamps(); // 世界ベルト64本すべてに王者を置く
       addLog('ジム開業。開業資金800万円と、後援会からの祝い金200万円でスタート。', true);
       addLog(a.name + '（★' + a.star + '／' + a.weight + '／' + a.bgLabel + '）と' + b.name + '（★' + b.star + '／' + b.weight + '／' + b.bgLabel + '）の2名が入門した。', true);
       addLog('目標は世界王者を育てること。まずは偶数月の興行で勝ち星を重ねよう。');
     }
     function refreshCandidates() {
       G.candidates = [makeFighter(rollStar()), makeFighter(rollStar()), makeFighter(rollStar())];
-      G.candidates.forEach(function (c) { c.isCandidate = true; });
+      G.candidates.forEach(function (c) {
+        c.isCandidate = true;
+        if (Math.random() < GENIUS_RATE) applyGenius(c);
+      });
     }
     function getFighter(id) {
       for (var i = 0; i < G.fighters.length; i++) if (G.fighters[i].id === id) return G.fighters[i];
@@ -1451,6 +1673,7 @@
       } else $('eventPanel').hidden = true;
       renderFightBanner();
       renderFighters();
+      renderRetireDecisions();
       renderTrainers();
       renderShop();
       renderMeal();
@@ -1484,7 +1707,7 @@
         html += faceHtml(f, 'face-sm');
         html += '<span><b>' + esc(f.name) + '</b> <span style="color:var(--ink-soft);font-size:.76rem;">（' + TIERS[f.tier].name + '／' + esc(f.weight) + '／' + f.wins + '勝' + f.losses + '敗）</span></span>';
         html += '<span class="vs">VS</span>' + faceHtml(m.opp, 'face-sm') + '<span class="opp">' + esc(m.opp.name) + (m.opp.nat ? '（' + esc(m.opp.nat) + '）' : '') + '</span>';
-        html += '<span style="font-size:.76rem;color:var(--ink-soft);">' + (m.isTitle ? 'タイトルマッチ' : TIERS[m.oppTier].name + '戦') + '・' + TIERS[f.tier].rounds + '回戦</span>';
+        html += '<span style="font-size:.76rem;color:var(--ink-soft);">' + (m.belt ? esc(beltLabelFor(m)) : (m.isTitle ? 'タイトルマッチ' : TIERS[m.oppTier].name + '戦')) + '・' + TIERS[f.tier].rounds + '回戦</span>';
         if (m.milestone) html += '<span class="milestone-badge">目標マッチ：' + esc(m.milestone) + '</span>';
         if (m.done && m.result) {
           html += '<span class="result-tag ' + (m.result.win ? 'win' : 'lose') + '" style="margin-left:auto;">' + esc(m.result.label) + '</span>';
@@ -1519,7 +1742,11 @@
         var next = TIERS[f.tier + 1];
         html += '<article class="fighter-card' + (f.injured > 0 ? ' injured' : '') + '">';
         html += '<div class="fc-top">' + faceHtml(f, 'face-md') + '<div class="fc-top-main">';
-        html += '<div class="fc-head"><div><span class="fc-name">' + esc(f.name) + '</span> ' + starsHtml(f.star);
+        ensureFighterBelts(f);
+        var maxSameWeight = 0;
+        WEIGHTS.forEach(function (w) { maxSameWeight = Math.max(maxSameWeight, beltsInWeight(f, w).length); });
+        var divCount = divisionsOf(f);
+        html += '<div class="fc-head"><div><span class="fc-name">' + esc(f.name) + '</span> ' + starsHtml(f.star) + (f.genius ? ' <span class="genius-badge">天才</span>' : '') + (f.gen >= 2 ? ' <span class="gen-badge">第' + f.gen + '世代</span>' : '') + (maxSameWeight >= 2 ? ' <span class="unify-badge">' + maxSameWeight + '団体統一王者</span>' : '') + (divCount >= 2 ? ' <span class="unify-badge">' + divCount + '階級制覇</span>' : '');
         html += '<div class="fc-meta">' + f.age + '歳／' + esc(f.style) + '　' + weightBadge(f.weight) + '</div></div>';
         html += '<div class="tier-badge"><span class="tier-name' + (tier.title ? ' champ' : '') + '">' + tier.name + '</span>';
         html += '<div class="tier-pt">' + (next ? '次ランクまで あと' + Math.max(0, next.need - f.rankPt) + 'pt' : '最高ランク到達') + '</div></div></div>';
@@ -1528,6 +1755,7 @@
         html += '<div class="fc-record">戦績 <span class="num">' + f.wins + '</span>勝 <span class="num">' + f.losses + '</span>敗' + (f.draws ? ' <span class="num">' + f.draws + '</span>分' : '') + '（<span class="ko num">' + f.ko + 'KO</span>）　ランクpt <span class="num">' + f.rankPt + '</span>';
         if (f.injured > 0) html += '　<span class="injury-tag">怪我で休場中：' + esc(f.injuryName || '故障') + '（あと' + f.injured + 'ヶ月）</span>';
         html += '</div>';
+        html += beltsHtml(f);
         html += '<div class="bar-row"><span class="bar-label">疲労</span><div class="bar-track"><div class="bar-fill fatigue ' + fatigueClass(f.fatigue) + '" style="width:' + clamp(f.fatigue, 0, 100) + '%"></div></div><span class="bar-num num">' + Math.round(f.fatigue) + '</span><span style="font-size:.72rem;color:var(--ink-soft);">' + fatigueLabel(f.fatigue) + '</span></div>';
         var cond = (typeof f.cond === 'number') ? f.cond : 70;
         html += '<div class="bar-row"><span class="bar-label">調子</span><div class="bar-track"><div class="bar-fill cond ' + condClass(cond) + '" style="width:' + clamp(cond, 0, 100) + '%"></div></div><span class="bar-num num">' + Math.round(cond) + '</span><span style="font-size:.72rem;color:var(--ink-soft);">' + condLabel(cond) + '（試合の動きに影響）</span></div>';
@@ -1539,6 +1767,13 @@
         html += '</select>';
         html += '<span class="xp-pill">経験値 <span class="num">' + f.xp + '</span></span>';
         html += '<button class="btn btn-small" data-detail="' + f.id + '">' + (selectedFighter === f.id ? '能力を閉じる' : '能力を割り振る') + '</button>';
+        html += '<button class="btn btn-small" data-rename="' + f.id + '">名前を変更</button>';
+        html += '<select data-wsel="' + f.id + '" aria-label="' + esc(f.name) + 'の変更先の階級">';
+        WEIGHTS.forEach(function (w) {
+          html += '<option value="' + esc(w) + '"' + (w === f.weight ? ' selected' : '') + '>階級：' + esc(w) + '</option>';
+        });
+        html += '</select>';
+        html += '<button class="btn btn-small" data-wchange="' + f.id + '">階級を変更</button>';
         html += '</div>';
         if (selectedFighter === f.id) {
           html += '<div class="stat-grid">';
@@ -1568,6 +1803,30 @@
         renderFighters();
         saveGame();
       });
+      var rens = wrap.querySelectorAll('[data-rename]');
+      for (var rn = 0; rn < rens.length; rn++) rens[rn].addEventListener('click', function () {
+        openRename(this.getAttribute('data-rename'));
+      });
+      var wchs = wrap.querySelectorAll('[data-wchange]');
+      for (var wc = 0; wc < wchs.length; wc++) wchs[wc].addEventListener('click', function () {
+        var fid = this.getAttribute('data-wchange');
+        var f = getFighter(fid); if (!f) return;
+        var sel = wrap.querySelector('[data-wsel="' + fid + '"]');
+        var nw = sel ? sel.value : f.weight;
+        if (nw === f.weight) { toast('今と同じ階級です'); return; }
+        // 興行月で試合が残っている選手は、カードが崩れるので変更できない
+        if (isFightMonth() && G.card && G.card.some(function (mm) { return mm.fighterId === fid && !mm.done; })) {
+          toast('興行月は試合を終えるまで階級変更できません');
+          return;
+        }
+        var oldW = f.weight;
+        f.weight = nw;
+        f.fatigue = clamp(f.fatigue + 10, 0, 100); // 減量・増量の負担
+        f.rankPt = Math.max(0, f.rankPt - 20); // 新しい階級では評価を積み直す
+        addLog(f.name + 'が階級を変更した（' + oldW + ' → ' + nw + '）。体重の作り直しで疲労が少し溜まり、新階級での評価は積み直しになる。保持中のベルトはそのまま。', true);
+        toast(f.name + ' が ' + nw + ' に階級変更');
+        render();
+      });
       var plus = wrap.querySelectorAll('[data-plus]');
       for (var k = 0; k < plus.length; k++) plus[k].addEventListener('click', function () {
         var parts = this.getAttribute('data-plus').split(':');
@@ -1581,6 +1840,118 @@
       });
     }
 
+    /* ================= 選手の改名 ================= */
+    var renameTargetId = null;
+    function openRename(id) {
+      var f = getFighter(id); if (!f) return;
+      renameTargetId = id;
+      var parts = f.name.split(' ');
+      $('renameLastInput').value = parts[0] || '';
+      $('renameFirstInput').value = parts.slice(1).join(' ') || '';
+      $('renameOverlay').hidden = false;
+      $('renameLastInput').focus();
+      $('renameLastInput').select();
+    }
+    function closeRename() { $('renameOverlay').hidden = true; renameTargetId = null; }
+    function applyRename() {
+      var f = renameTargetId ? getFighter(renameTargetId) : null;
+      if (!f) { closeRename(); return; }
+      var last = $('renameLastInput').value.replace(/[\s　]/g, '');
+      var first = $('renameFirstInput').value.replace(/[\s　]/g, '');
+      if (!last || !first) { toast('姓と名の両方を入力してください'); return; }
+      var oldName = f.name;
+      f.name = last + ' ' + first;
+      // 王者名簿の表示名も追随させる
+      if (G.champs) {
+        Object.keys(G.champs).forEach(function (k) {
+          var c = G.champs[k];
+          if (c && c.holderId === f.id) c.name = f.name;
+        });
+      }
+      addLog(oldName + 'が「' + f.name + '」に改名した。リングアナウンスも新しい名前で呼ばれる。');
+      closeRename();
+      render();
+      toast('名前を「' + f.name + '」に変更しました');
+    }
+    $('renameOkBtn').addEventListener('click', applyRename);
+    $('renameCancelBtn').addEventListener('click', closeRename);
+    $('renameOverlay').addEventListener('click', function (e) { if (e.target === this) closeRename(); });
+    ['renameLastInput', 'renameFirstInput'].forEach(function (id) {
+      $(id).addEventListener('keydown', function (e) { if (e.key === 'Enter') applyRename(); });
+    });
+
+    /* ================= 引退後の進路（継承／転生） ================= */
+    function renderRetireDecisions() {
+      var sec = $('retireSection');
+      var list = (G && G.pendingRetire) || [];
+      if (list.length === 0) { sec.hidden = true; $('retireList').innerHTML = ''; return; }
+      sec.hidden = false;
+      var html = '';
+      list.forEach(function (p, i) {
+        var gen = p.gen || 1;
+        html += '<div class="retire-card">' + faceHtml(p, 'face-md') + '<div class="rt-main">';
+        html += '<span class="rt-name">' + esc(p.name) + '</span> ' + starsHtml(p.star) + (gen >= 2 ? ' <span class="gen-badge">第' + gen + '世代</span>' : '');
+        html += '<div class="rt-meta">現役通算 ' + p.wins + '勝' + p.losses + '敗（' + p.ko + 'KO）／最高ランク ' + TIERS[p.tier].name + (p.titlesWon ? '／タイトル ' + p.titlesWon + '度獲得' : '') + '／' + p.age + '歳で引退</div>';
+        html += '<div class="rt-btns">';
+        html += '<button class="btn btn-small" data-retire="trainer:' + i + '"' + (G.trainers.length >= 5 ? ' disabled' : '') + '>トレーナーとして迎える（継承）</button>';
+        html += '<button class="btn btn-small btn-red" data-retire="rebirth:' + i + '"' + (G.fighters.length >= rosterCap() ? ' disabled' : '') + '>転生して再入門（第' + (gen + 1) + '世代）</button>';
+        html += '<button class="btn btn-small" data-retire="leave:' + i + '">引退を見送る</button>';
+        html += '</div>';
+        if (G.trainers.length >= 5) html += '<div class="rt-meta">トレーナーは5人まで（枠がいっぱいです）</div>';
+        if (G.fighters.length >= rosterCap()) html += '<div class="rt-meta">転生には在籍枠の空きが必要です</div>';
+        html += '</div></div>';
+      });
+      $('retireList').innerHTML = html;
+      var btns = $('retireList').querySelectorAll('[data-retire]');
+      for (var i = 0; i < btns.length; i++) btns[i].addEventListener('click', function () {
+        var parts = this.getAttribute('data-retire').split(':');
+        decideRetire(parts[0], parseInt(parts[1], 10));
+      });
+    }
+
+    function decideRetire(mode, idx) {
+      var p = G.pendingRetire[idx];
+      if (!p) return;
+      if (mode === 'trainer') {
+        if (G.trainers.length >= 5) { toast('トレーナーは5人までです'); return; }
+        G.pendingRetire.splice(idx, 1);
+        G.trainers.push({ name: p.name, faceIdx: p.faceIdx, age: p.age, wins: p.wins, losses: p.losses, ko: p.ko, titlesWon: p.titlesWon, tier: p.tier, specialty: p.specialty, retireYear: G.year, gen: p.gen || 1 });
+        addLog(p.name + 'がトレーナーとしてジムに残ることになった。戦績は' + p.wins + '勝' + p.losses + '敗' + p.ko + 'KO。現役時代の経験が、これからは後輩の力になる。', true);
+        toast(p.name + ' がトレーナーに就任（継承）');
+      } else if (mode === 'rebirth') {
+        if (G.fighters.length >= rosterCap()) { toast('在籍枠がいっぱいです'); return; }
+        G.pendingRetire.splice(idx, 1);
+        var gen = (p.gen || 1) + 1;
+        var f = makeFighter(p.star);
+        // 転生：顔・名前・階級・スタイルはそのまま。素質の上限は通常の生成のまま（上げない）
+        f.name = p.name;
+        f.faceIdx = p.faceIdx;
+        f.style = p.style;
+        f.weight = p.weight;
+        f.age = irnd(17, 19);
+        f.gen = gen;
+        f.genius = !!p.genius;
+        // 引き継ぎは初期値と育ちやすさまで：前世の最終能力の約35%を初期値の下限にし、経験値を付けて再スタート
+        STATS.forEach(function (s) {
+          var inherited = clamp(Math.round((p.stats[s.key] || 0) * 0.35), 5, f.caps[s.key]);
+          if (inherited > f.stats[s.key]) f.stats[s.key] = inherited;
+        });
+        f.xp = 40;
+        f.wins = 0; f.losses = 0; f.ko = 0; f.draws = 0; f.tier = 0; f.rankPt = 0; f.titlesWon = 0; f.rookieKing = false;
+        f.bgId = 'rebirth'; f.bgLabel = '転生'; f.bgTag = '第' + gen + '世代';
+        f.bgDetail = '引退した名選手' + p.name + 'の生まれ変わりと噂される若手。同じ顔、同じ' + p.style + 'のスタイル、そして前世を思わせる動きの冴えと迷いのなさを持つ。受け継いだのは血と経験の欠片だけ――天井の高さは今世の素材次第だ。';
+        f.pastRecord = '前世の戦績 ' + p.wins + '勝' + p.losses + '敗（' + p.ko + 'KO）' + (p.titlesWon ? '／タイトル ' + p.titlesWon + '度獲得' : '／最高ランク ' + TIERS[p.tier].name);
+        G.fighters.push(f);
+        selectedFighter = f.id;
+        addLog('★ ' + p.name + 'が若い新人として転生し、再入門した（第' + gen + '世代）。同じ顔とスタイルを受け継ぎ、前世の経験の一部が初期の動きに宿っている。', true);
+        toast(p.name + ' が転生（第' + gen + '世代）');
+      } else {
+        G.pendingRetire.splice(idx, 1);
+        addLog(p.name + 'の引退を見送った。戦績は' + p.wins + '勝' + p.losses + '敗' + p.ko + 'KO。長い現役生活、お疲れさま。', true);
+      }
+      render();
+    }
+
     /* 引退した先輩トレーナー（継承）の表示 */
     function renderTrainers() {
       var sec = $('trainerSection');
@@ -1590,7 +1961,7 @@
       G.trainers.forEach(function (t) {
         var specName = (STATS.filter(function (s) { return s.key === t.specialty; })[0] || {}).name || '';
         html += '<div class="trainer-card">' + faceHtml(t, 'face-md') + '<div>';
-        html += '<span class="tr-name">' + esc(t.name) + ' トレーナー</span>';
+        html += '<span class="tr-name">' + esc(t.name) + ' トレーナー</span>' + (t.gen >= 2 ? ' <span class="gen-badge">第' + t.gen + '世代</span>' : '');
         html += '<div class="tr-meta">現役通算 ' + t.wins + '勝' + t.losses + '敗（' + t.ko + 'KO）／最高ランク ' + TIERS[t.tier].name + (t.titlesWon ? '／タイトル ' + t.titlesWon + '度獲得' : '') + '／' + t.retireYear + '年目に引退</div>';
         html += '<div class="tr-bonus">育成ボーナス：全選手の練習経験値 +2／月・コンディション +2／月（最大3人分まで合算）。得意だった「' + specName + '」の割り振りコスト -1。</div>';
         html += '</div></div>';
@@ -1623,14 +1994,14 @@
       var html = '';
       G.candidates.forEach(function (c, i) {
         var best = STATS.map(function (s) { return { n: s.name, v: c.stats[s.key] }; }).sort(function (a, b) { return b.v - a.v; })[0];
-        html += '<div class="cand-card"><div class="cand-face-wrap">' + faceHtml(c, 'face-lg') + '</div><div style="text-align:center;"><span class="cand-name">' + esc(c.name) + '</span> ' + starsHtml(c.star) + '</div>';
+        html += '<div class="cand-card"><div class="cand-face-wrap">' + faceHtml(c, 'face-lg') + '</div><div style="text-align:center;"><span class="cand-name">' + esc(c.name) + '</span> ' + starsHtml(c.star) + (c.genius ? ' <span class="genius-badge">天才</span>' : '') + '</div>';
         html += '<div class="cand-meta" style="text-align:center;">' + c.age + '歳<br />' + weightBadge(c.weight) + '</div>';
         html += '<div style="text-align:center;"><span class="type-badge">タイプ：' + esc(c.style) + '</span><div class="type-desc">' + esc(TYPE_INFO[c.style] || '') + '</div></div>';
         html += bgBoxHtml(c);
         html += '<div class="cand-stats">得意：<b>' + best.n + ' ' + best.v + '</b>（上限' + c.caps[STATS.filter(function (s) { return s.name === best.n; })[0].key] + '）<br />総合力：<b>' + Math.round(statAvg(c)) + '</b>／素質上限の平均：<b>' + Math.round(STATS.reduce(function (a, s) { return a + c.caps[s.key]; }, 0) / 6) + '</b></div>';
-        html += '<button class="btn btn-red" data-sign="' + i + '" ' + (G.fighters.length >= rosterCap() || G.funds < SIGN_COST[c.star] ? 'disabled' : '') + '>契約金' + SIGN_COST[c.star] + '万円で迎え入れる</button>';
+        html += '<button class="btn btn-red" data-sign="' + i + '" ' + (G.fighters.length >= rosterCap() || G.funds < signCost(c) ? 'disabled' : '') + '>契約金' + signCost(c) + '万円で迎え入れる</button>';
         if (G.fighters.length >= rosterCap()) html += '<div class="cand-meta">在籍枠がいっぱいです（寮を建てると枠が増える）</div>';
-        else if (G.funds < SIGN_COST[c.star]) html += '<div class="cand-meta">資金が足りません</div>';
+        else if (G.funds < signCost(c)) html += '<div class="cand-meta">資金が足りません</div>';
         html += '</div>';
       });
       grid.innerHTML = html;
@@ -1659,7 +2030,7 @@
         return h;
       }
       var h = '<div class="compare-wrap"><div class="cmp-title">候補を比べる</div><div class="cmp-note">赤字がその項目で候補の中で一番良い数値。能力は「現在値（上限）」で、将来性は上限で見る。</div><div class="cmp-grid">';
-      h += '<div class="cmp-head"></div>' + cs.map(function (c) { return '<div class="cmp-head">' + esc(c.name.split(' ')[1] || c.name) + ' ★' + c.star + '</div>'; }).join('');
+      h += '<div class="cmp-head"></div>' + cs.map(function (c) { return '<div class="cmp-head">' + esc(c.name.split(' ')[1] || c.name) + ' ★' + c.star + (c.genius ? ' 天才' : '') + '</div>'; }).join('');
       h += textRow('タイプ', cs.map(function (c) { return esc(c.style); }));
       h += textRow('階級', cs.map(function (c) { return esc(c.weight); }));
       h += numRow('年齢', cs.map(function (c) { return -c.age; })).replace(/<span class="num">-(\d+)<\/span>/g, '<span class="num">$1</span>歳');
@@ -1673,7 +2044,7 @@
         });
       });
       h += textRow('背景', cs.map(function (c) { return esc(c.bgLabel || '―'); }));
-      h += numRow('契約金', cs.map(function (c) { return -SIGN_COST[c.star]; })).replace(/<span class="num">-(\d+)<\/span>/g, '<span class="num">$1</span>万円');
+      h += numRow('契約金', cs.map(function (c) { return -signCost(c); })).replace(/<span class="num">-(\d+)<\/span>/g, '<span class="num">$1</span>万円');
       h += '</div></div>';
       wrap.innerHTML = h;
     }
@@ -1682,14 +2053,16 @@
       var c = G.candidates[i];
       if (!c) return;
       if (G.fighters.length >= rosterCap()) { toast('在籍枠がいっぱいです'); return; }
-      if (G.funds < SIGN_COST[c.star]) { toast('資金が足りません'); return; }
-      G.funds -= SIGN_COST[c.star];
+      if (G.funds < signCost(c)) { toast('資金が足りません'); return; }
+      G.funds -= signCost(c);
       G.candidates.splice(i, 1);
       delete c.isCandidate;
+      ensureFighterBelts(c); // 旧セーブの候補など、ベルト関連フィールドが無い場合の補完
       G.fighters.push(c);
       selectedFighter = c.id;
-      addLog(c.name + '（★' + c.star + '／' + c.weight + '／' + c.bgLabel + '）が入門した。実績：' + c.pastRecord + '。契約金' + SIGN_COST[c.star] + '万円。', c.star >= 4);
-      if (c.star >= 4) toast('大物新人 ' + c.name + ' が入門！');
+      addLog(c.name + '（★' + c.star + (c.genius ? '・天才' : '') + '／' + c.weight + '／' + c.bgLabel + '）が入門した。実績：' + c.pastRecord + '。契約金' + signCost(c) + '万円。', c.star >= 4);
+      if (c.genius) toast('天才 ' + c.name + ' が入門！');
+      else if (c.star >= 4) toast('大物新人 ' + c.name + ' が入門！');
       render();
     }
 
@@ -1724,9 +2097,30 @@
       var html = '<div style="font-size:.9rem;line-height:1.9;">';
       html += '通算成績：<b class="num">' + G.totalWins + '</b>勝 <b class="num">' + G.totalLosses + '</b>敗（<b class="num">' + G.totalKO + '</b>KO）<br />';
       html += '獲得タイトル数：<b class="num">' + G.totalTitles + '</b> ／ 現在の王者・ランカー上位在籍：<b class="num">' + champCount + '</b>人<br />';
+      ensureChamps();
+      var heldList = [];
+      G.fighters.forEach(function (f) {
+        ensureFighterBelts(f);
+        f.belts.forEach(function (b) { heldList.push(b.org + ' ' + b.weight + '（' + f.name + '）'); });
+      });
+      html += '世界ベルト（4団体×16階級＝64本）：自ジム保持 <b class="num">' + heldList.length + '</b>本' + (heldList.length ? ' ― ' + esc(heldList.join('、')) : '') + '<br />';
       html += 'ジムの格：<b>' + GRADES[gradeIdx()].name + '</b>（格ポイント ' + gymScore() + (GRADES[gradeIdx() + 1] ? ' ／ 次の格まであと ' + (GRADES[gradeIdx() + 1].need - gymScore()) : '') + '）';
       html += '</div>';
       $('recordPanel').innerHTML = html;
+      var bb = $('beltBook');
+      if (bb) {
+        var bh = '';
+        WEIGHTS.forEach(function (w) {
+          bh += '<div class="bb-row"><span class="bb-w">' + esc(w) + '</span>';
+          ORGS.forEach(function (org) {
+            var c = G.champs[beltKey(org, w)];
+            var own = !!(c && c.holderId);
+            bh += '<span class="bb-cell' + (own ? ' own' : '') + '"><b>' + org + '</b> ' + esc(c ? c.name : '―') + (c && c.nat ? '（' + esc(c.nat) + '）' : '') + (own ? ' ★自ジム' : '') + '</span>';
+          });
+          bh += '</div>';
+        });
+        bb.innerHTML = bh;
+      }
       var list = $('logList');
       list.innerHTML = G.log.map(function (l) {
         return '<li class="' + (l.important ? 'important' : '') + '"><span class="log-date">' + esc(l.date) + '</span><span>' + esc(l.text) + '</span></li>';
@@ -1844,7 +2238,41 @@
         if (isTitle && nx) milestone = milestoneNameFor(f);
         else if (f.tier === 1 && f.age <= 24 && f.wins >= 2 && !f.rookieKing) milestone = '新人王戦';
         else if (nx && !nx.title && f.rankPt >= nx.need - 8) milestone = milestoneNameFor(f);
-        return { fighterId: f.id, opp: opp, oppTier: oppTier, isTitle: isTitle, milestone: milestone, done: f.injured > 0, result: null };
+        var match = { fighterId: f.id, opp: opp, oppTier: oppTier, isTitle: isTitle, milestone: milestone, done: f.injured > 0, result: null, belt: null };
+        // 世界戦はベルト制：世界王座への挑戦は「団体×階級」を指定し、その団体の王者と戦う
+        if (f.tier === 7 && isTitle) {
+          var corg = defaultChallengeOrg(f);
+          if (corg) {
+            match.belt = { kind: 'challenge', org: corg, weight: f.weight };
+            match.opp = champOpponent(G.champs[beltKey(corg, f.weight)]);
+            match.opp.weight = f.weight;
+            match.oppTier = 8;
+            match.milestone = '世界タイトルマッチ';
+          }
+        } else if (f.tier >= 8) {
+          // 世界ランク最上位の選手：自階級のベルトを持っていれば防衛戦、無ければ挑戦者として王座戦
+          ensureFighterBelts(f);
+          var heldHere = beltsInWeight(f, f.weight);
+          if (heldHere.length > 0) {
+            match.isTitle = true;
+            match.belt = { kind: 'defend', org: heldHere[0].org, weight: f.weight };
+            match.opp = makeOpponent(8, true); // 挑戦者（世界ランカー級）
+            match.opp.weight = f.weight;
+            match.oppTier = 8;
+            match.milestone = '世界王座防衛戦';
+          } else {
+            var corg2 = defaultChallengeOrg(f);
+            if (corg2) {
+              match.isTitle = true;
+              match.belt = { kind: 'challenge', org: corg2, weight: f.weight };
+              match.opp = champOpponent(G.champs[beltKey(corg2, f.weight)]);
+              match.opp.weight = f.weight;
+              match.oppTier = 8;
+              match.milestone = '世界タイトルマッチ';
+            }
+          }
+        }
+        return match;
       });
     }
 
@@ -2102,7 +2530,8 @@
       var m = G.card[cardIdx];
       var f = getFighter(m.fighterId);
       if (!f || m.done) return;
-      preFight = { cardIdx: cardIdx, tactic: 'balanced', counter: 'none' };
+      preFight = { cardIdx: cardIdx, tactic: 'balanced', counter: 'none', beltKind: m.belt ? m.belt.kind : null, beltOrg: m.belt ? m.belt.org : null };
+      if (m.belt && m.belt.kind === 'defend') m._bk = 'defend:' + m.belt.org;
       renderPreFight();
       $('preFightOverlay').hidden = false;
     }
@@ -2124,6 +2553,13 @@
       });
       h += '<div class="sc-sub" style="margin-top:8px;">こちらの総合力 ' + Math.round(statAvg(f)) + ' ／ 相手の総合力 ' + Math.round(statAvg(o)) + '。格上相手ほど勝った時のランクポイントが大きい。</div>';
       h += '</div>';
+      if (m.belt) {
+        var stakes = '';
+        if (m.belt.kind === 'challenge') stakes = '勝てば ' + f.name + ' が' + m.belt.weight + 'の' + m.belt.org + '世界王者になる。負けても王座は動かない（王者は防衛成功）。';
+        else if (m.belt.kind === 'unify') stakes = '勝てば ' + m.belt.org + '王座も獲得して統一王者になる。負ければ自分の ' + m.belt.ownOrg + '王座を失う。';
+        else stakes = '勝てば ' + m.belt.org + '王座の防衛成功。負ければ王座陥落し、挑戦者が新王者になる。';
+        h += '<div class="scout-panel" style="border-color:var(--gold);background:var(--gold-bg);"><div class="sc-title">' + esc(beltLabelFor(m)) + '</div><div class="sc-sub">' + esc(stakes) + '</div></div>';
+      }
       $('preFightBody').innerHTML = h;
       var tg = '';
       PRE_TACTICS.forEach(function (t) {
@@ -2138,10 +2574,79 @@
       var tactic = PRE_TACTICS.filter(function (t) { return t.id === preFight.tactic; })[0];
       var counterName = preFight.counter === 'none' ? 'なし' : COUNTER_INFO[preFight.counter].name;
       $('preFightNote').innerHTML = '現在の選択 ― 作戦：<b>' + esc(tactic.name) + '</b> ／ 対策練習：<b>' + esc(counterName) + '</b>' + (preFight.counter !== 'none' ? '（対策練習の効果はこの試合だけ。試合前の特訓で疲労が+6する）' : '');
+      renderBeltArea();
       var tBtns = $('tacticGrid').querySelectorAll('[data-tactic]');
       for (var i = 0; i < tBtns.length; i++) tBtns[i].addEventListener('click', function () { preFight.tactic = this.getAttribute('data-tactic'); renderPreFight(); });
       var cBtns = $('counterGrid').querySelectorAll('[data-counter]');
       for (var j = 0; j < cBtns.length; j++) cBtns[j].addEventListener('click', function () { preFight.counter = this.getAttribute('data-counter'); renderPreFight(); });
+    }
+    /* 試合前ブリーフィングのベルト選択：挑戦する団体／防衛戦・統一戦の形式を選び、対戦相手を差し替える */
+    function renderBeltArea() {
+      var area = $('beltArea');
+      if (!area || !preFight) return;
+      var m = G.card[preFight.cardIdx];
+      var f = getFighter(m.fighterId);
+      if (!f || !m.belt) { area.innerHTML = ''; return; }
+      ensureChamps(); ensureFighterBelts(f);
+      var h = '';
+      if (m.belt.kind === 'challenge') {
+        h += '<h2 class="sec" style="margin-top:18px;">挑戦する団体を選ぶ <span class="sec-note">4団体×16階級＝64本のベルト。王者は団体ごとに違う</span></h2>';
+        h += '<div class="plan-grid">';
+        ORGS.forEach(function (org) {
+          var c = G.champs[beltKey(org, f.weight)];
+          var own = !!(c && c.holderId);
+          h += '<button class="plan-btn' + (preFight.beltOrg === org ? ' selected' : '') + '" data-belt-org="' + org + '"' + (own ? ' disabled' : '') + '>' + org + ' 王者：' + esc(c ? c.name : '―') + '<span class="plan-effect">' + (own ? '自ジムの選手が保持中（挑戦できない）' : (c ? esc((c.nat ? c.nat + '／' : '') + c.wins + '勝' + c.losses + '敗（' + c.ko + 'KO）／' + c.style) : '')) + '</span></button>';
+        });
+        h += '</div>';
+      } else {
+        var held = beltsInWeight(f, f.weight);
+        h += '<h2 class="sec" style="margin-top:18px;">世界王座戦の形式を選ぶ <span class="sec-note">保持ベルトの防衛戦か、他団体王者との統一戦か</span></h2>';
+        h += '<div class="plan-grid">';
+        held.forEach(function (b) {
+          var sel = preFight.beltKind === 'defend' && preFight.beltOrg === b.org;
+          h += '<button class="plan-btn' + (sel ? ' selected' : '') + '" data-belt-defend="' + b.org + '">' + b.org + '王座 防衛戦<span class="plan-effect">挑戦者を迎え撃つ。勝てば防衛成功、負ければ' + b.org + '王座を失う</span></button>';
+        });
+        ORGS.forEach(function (org) {
+          if (held.some(function (b) { return b.org === org; })) return;
+          var c = G.champs[beltKey(org, f.weight)];
+          var own = !!(c && c.holderId);
+          var sel = preFight.beltKind === 'unify' && preFight.beltOrg === org;
+          h += '<button class="plan-btn' + (sel ? ' selected' : '') + '" data-belt-unify="' + org + '"' + (own ? ' disabled' : '') + '>' + org + '王座 統一戦（王者 ' + esc(c ? c.name : '―') + '）<span class="plan-effect">' + (own ? '自ジムの選手が保持中（戦えない）' : '勝てば' + org + '王座も獲得して統一王者。負ければ自分の' + (held[0] ? held[0].org : '') + '王座を失う') + '</span></button>';
+        });
+        h += '</div>';
+      }
+      area.innerHTML = h;
+      var orgBtns = area.querySelectorAll('[data-belt-org]');
+      for (var i = 0; i < orgBtns.length; i++) orgBtns[i].addEventListener('click', function () {
+        var org = this.getAttribute('data-belt-org');
+        preFight.beltOrg = org;
+        m.belt.org = org;
+        m.opp = champOpponent(G.champs[beltKey(org, f.weight)]);
+        m.opp.weight = f.weight;
+        renderPreFight();
+      });
+      var defBtns = area.querySelectorAll('[data-belt-defend]');
+      for (var j = 0; j < defBtns.length; j++) defBtns[j].addEventListener('click', function () {
+        var org = this.getAttribute('data-belt-defend');
+        preFight.beltKind = 'defend'; preFight.beltOrg = org;
+        m.belt = { kind: 'defend', org: org, weight: f.weight };
+        if (m._bk !== 'defend:' + org) { // 形式を変えた時だけ挑戦者を組み直す
+          m.opp = makeOpponent(8, true);
+          m.opp.weight = f.weight;
+          m._bk = 'defend:' + org;
+        }
+        renderPreFight();
+      });
+      var uniBtns = area.querySelectorAll('[data-belt-unify]');
+      for (var k = 0; k < uniBtns.length; k++) uniBtns[k].addEventListener('click', function () {
+        var org = this.getAttribute('data-belt-unify');
+        var heldNow = beltsInWeight(f, f.weight);
+        preFight.beltKind = 'unify'; preFight.beltOrg = org;
+        m.belt = { kind: 'unify', org: org, ownOrg: heldNow[0].org, weight: f.weight };
+        m.opp = champOpponent(G.champs[beltKey(org, f.weight)]);
+        m.opp.weight = f.weight;
+        renderPreFight();
+      });
     }
     function startFight(cardIdx, plan) {
       var m = G.card[cardIdx];
@@ -2151,16 +2656,18 @@
       if (plan.counter && plan.counter !== 'none') { f.fatigue = clamp(f.fatigue + 6, 0, 100); saveGame(); } // 対策練習の負担
       var st = newFightState(f, m.opp, plan);
       currentFight = { cardIdx: cardIdx, f: f, opp: m.opp, st: st, events: [], evIdx: 0, finished: false, waitingSecond: false, res: null, plan: plan };
-      $('fightTitle').textContent = (m.milestone ? '目標マッチ【' + m.milestone + '】：' : (m.isTitle ? 'タイトルマッチ：' : '')) + f.name + ' vs ' + m.opp.name;
-      $('fightSub').textContent = f.weight + '（' + (WEIGHT_LIMIT[f.weight] || '') + '） ' + TIERS[f.tier].rounds + '回戦／' + (m.isTitle ? TIERS[f.tier + 1].name + 'を懸けた一戦' : '相手は' + TIERS[m.oppTier].name + 'クラス') + '／相手タイプ：' + (m.opp.nat ? m.opp.nat + 'の' : '') + m.opp.style + '（' + m.opp.wins + '勝' + m.opp.losses + '敗）／コンディション ' + Math.round(st.startCond) + '（' + condLabel(st.startCond) + '）／作戦：' + st.tactic.name + (st.counterKey ? '／対策練習：' + COUNTER_INFO[st.counterKey].name + '（相手の対象能力-18%、この試合のみ）' : '／対策練習なし');
+      $('fightTitle').textContent = (m.belt ? '【' + beltLabelFor(m) + '】：' : (m.milestone ? '目標マッチ【' + m.milestone + '】：' : (m.isTitle ? 'タイトルマッチ：' : ''))) + f.name + ' vs ' + m.opp.name;
+      $('fightSub').textContent = f.weight + '（' + (WEIGHT_LIMIT[f.weight] || '') + '） ' + TIERS[f.tier].rounds + '回戦／' + (m.belt ? beltLabelFor(m) + 'を懸けた一戦' : (m.isTitle ? TIERS[f.tier + 1].name + 'を懸けた一戦' : '相手は' + TIERS[m.oppTier].name + 'クラス')) + '／相手タイプ：' + (m.opp.nat ? m.opp.nat + 'の' : '') + m.opp.style + '（' + m.opp.wins + '勝' + m.opp.losses + '敗）／コンディション ' + Math.round(st.startCond) + '（' + condLabel(st.startCond) + '）／作戦：' + st.tactic.name + (st.counterKey ? '／対策練習：' + COUNTER_INFO[st.counterKey].name + '（相手の対象能力-18%、この試合のみ）' : '／対策練習なし');
       $('cornerRedName').textContent = f.name;
       $('cornerRedMeta').textContent = G.gymName + 'ジム／' + TIERS[f.tier].name + '／' + f.weight + '／' + f.wins + '勝' + f.losses + '敗';
       $('cornerRedFace').innerHTML = faceHtml(f, 'face-sm');
       $('cornerBlueName').textContent = m.opp.name;
       $('cornerBlueMeta').textContent = (m.opp.nat ? m.opp.nat + '／' : '') + TIERS[m.oppTier].name + 'クラス／' + m.opp.weight + '／' + m.opp.style;
       $('cornerBlueFace').innerHTML = faceHtml(m.opp, 'face-sm');
-      $('boxerRedFig').innerHTML = boxerFigHtml(f, '#b3232a');
-      $('boxerBlueFig').innerHTML = boxerFigHtml(m.opp, '#2456a6');
+      var beltCountF = beltsInWeight(f, f.weight).length;
+      var beltCountO = m.belt ? (m.belt.kind === 'defend' ? 0 : 1) : 0; // 挑戦・統一戦の相手は王者なのでベルト1本を身につける
+      $('boxerRedFig').innerHTML = boxerFigHtml(f, '#b3232a') + beltOverlayHtml(beltCountF);
+      $('boxerBlueFig').innerHTML = boxerFigHtml(m.opp, '#2456a6') + beltOverlayHtml(beltCountO);
       $('boxerRedName').textContent = f.name.split(' ')[1];
       $('boxerBlueName').textContent = m.opp.name.split(' ')[1];
       ['F', 'O'].forEach(function (s) {
@@ -2437,8 +2944,64 @@
           addLog(f.name + 'が' + next.name + 'に昇格した。', true);
         }
       }
-      // 王者がタイトル戦で負けたら陥落
-      if (res.win === false && tier.title && m.isTitle) {
+      // 世界ベルト（4団体）の移行：挑戦・統一戦・防衛戦の結果をベルト保持に反映する
+      if (m.belt) {
+        ensureChamps(); ensureFighterBelts(f);
+        var bOrg = m.belt.org, bWeight = m.belt.weight;
+        if (res.win === true) {
+          if (m.belt.kind === 'challenge') {
+            awardBelt(f, bOrg, bWeight);
+            if (tier === TIERS[8]) { // 既に世界最上位の選手が（階級変更先などで）獲った場合はここで数える
+              f.titlesWon++; G.totalTitles++;
+              G.points = (G.points || 0) + 50;
+              G.fans += 150;
+              detail += '／' + bOrg + '世界王座獲得！／無料ポイント+50pt';
+              addLog('★ ' + f.name + 'が' + bWeight + 'の' + bOrg + '世界王座を獲得した！', true);
+              toast(f.name + ' が ' + bOrg + '世界王者に！');
+            } else {
+              detail += '／団体は' + bOrg;
+            }
+          } else if (m.belt.kind === 'unify') {
+            awardBelt(f, bOrg, bWeight);
+            f.titlesWon++; G.totalTitles++;
+            G.points = (G.points || 0) + 50;
+            G.fans += 150;
+            var uniCount = beltsInWeight(f, bWeight).length;
+            detail += '／統一戦勝利！ ' + bOrg + '王座も獲得し、' + bWeight + ' ' + uniCount + '団体統一王者！／無料ポイント+50pt';
+            addLog('★ ' + f.name + 'が統一戦に勝ち、' + bWeight + 'の' + uniCount + '団体統一王者になった！', true);
+            toast(f.name + ' が ' + uniCount + '団体統一王者に！');
+          } else { // 防衛戦
+            f.defenses = (f.defenses || 0) + 1;
+            G.points = (G.points || 0) + 20;
+            G.fans += 80;
+            syncChampFromFighter(f, bOrg, bWeight);
+            detail += '／' + bOrg + '王座防衛成功（通算防衛' + f.defenses + '度）／無料ポイント+20pt';
+            addLog('★ ' + f.name + 'が' + bOrg + '世界王座の防衛に成功した（防衛' + f.defenses + '度目）。', true);
+            toast(f.name + ' が ' + bOrg + '王座防衛！');
+          }
+        } else if (res.win === false) {
+          if (m.belt.kind === 'challenge') {
+            var defChamp = G.champs[beltKey(bOrg, bWeight)];
+            if (defChamp && !defChamp.holderId) defChamp.wins++; // 王者は防衛成功として戦績を積む
+            addLog(f.name + 'の' + bOrg + '世界王座挑戦は実らなかった。王者' + (defChamp ? defChamp.name : '') + 'は防衛に成功。', true);
+          } else {
+            var loseOrg = m.belt.kind === 'unify' ? m.belt.ownOrg : bOrg;
+            removeBelt(f, loseOrg, bWeight);
+            G.champs[beltKey(loseOrg, bWeight)] = champFromOpponent(m.opp);
+            detail += '／' + loseOrg + '王座陥落…';
+            addLog(f.name + 'が' + loseOrg + '世界王座から陥落した。新王者は' + m.opp.name + '。', true);
+            if (f.belts.length === 0 && f.tier >= 8) {
+              f.tier = 7;
+              f.rankPt = TIERS[7].need;
+              detail += '／世界ランカーに後退';
+            }
+          }
+        } else {
+          addLog(f.name + 'の' + beltLabelFor(m) + 'は引き分け。王座はそのまま保持された。', true);
+        }
+      }
+      // 王者がタイトル戦で負けたら陥落（世界ベルト戦は上の処理で扱うため除く）
+      if (!m.belt && res.win === false && tier.title && m.isTitle) {
         // 防衛戦扱いの敗北：1ランク下がる
         f.tier = Math.max(0, f.tier - 1);
         f.rankPt = TIERS[f.tier].need;
@@ -2537,13 +3100,27 @@
         G.month = 1; G.year++;
         G.fighters.forEach(function (f) { f.age++; });
         var retired = G.fighters.filter(function (f) { return f.age >= 38; });
+        if (!Array.isArray(G.pendingRetire)) G.pendingRetire = [];
         retired.forEach(function (f) {
-          // 継承：実績のある選手は引退後もトレーナーとしてジムに残り、後輩を育てる
+          // 世界ベルト保持者が引退したら、そのベルトは空位となり新しい王者が就く
+          ensureFighterBelts(f);
+          if (f.belts.length > 0) {
+            ensureChamps();
+            f.belts.forEach(function (b) {
+              var nc = newNpcChamp();
+              G.champs[beltKey(b.org, b.weight)] = nc;
+              addLog(f.name + 'の引退で' + b.weight + 'の' + b.org + '世界王座は空位となり、新たに' + nc.name + '（' + nc.nat + '）が王座に就いた。', true);
+            });
+            f.belts = [];
+          }
+          // 実績のある選手は引退時に進路を選べる：トレーナーとして残る（継承）か、若い新人として転生するか
           var bestKey = STATS.map(function (s) { return { key: s.key, v: f.stats[s.key] }; }).sort(function (a, b) { return b.v - a.v; })[0].key;
-          if ((f.wins >= 5 || f.titlesWon > 0 || f.tier >= 3) && G.trainers.length < 5) {
-            G.trainers.push({ name: f.name, faceIdx: f.faceIdx, age: f.age, wins: f.wins, losses: f.losses, ko: f.ko, titlesWon: f.titlesWon, tier: f.tier, specialty: bestKey, retireYear: G.year });
-            addLog(f.name + '（' + f.age + '歳）が引退し、トレーナーとしてジムに残ることになった。戦績は' + f.wins + '勝' + f.losses + '敗' + f.ko + 'KO。現役時代の経験が、これからは後輩の力になる。', true);
-            toast(f.name + ' がトレーナーに就任（継承）');
+          if (f.wins >= 5 || f.titlesWon > 0 || f.tier >= 3) {
+            var statsCopy = {};
+            STATS.forEach(function (s) { statsCopy[s.key] = f.stats[s.key]; });
+            G.pendingRetire.push({ name: f.name, faceIdx: f.faceIdx, age: f.age, wins: f.wins, losses: f.losses, ko: f.ko, titlesWon: f.titlesWon, tier: f.tier, specialty: bestKey, style: f.style, weight: f.weight, star: f.star, stats: statsCopy, gen: f.gen || 1, genius: !!f.genius });
+            addLog(f.name + '（' + f.age + '歳）が引退を迎えた。実績を残した選手だ。ジムのタブで進路（トレーナー／転生／引退）を選ぼう。戦績は' + f.wins + '勝' + f.losses + '敗' + f.ko + 'KO。', true);
+            toast(f.name + ' が引退。進路を選べます');
           } else {
             addLog(f.name + '（' + f.age + '歳）が引退した。戦績は' + f.wins + '勝' + f.losses + '敗' + f.ko + 'KO。お疲れさま。', true);
           }
