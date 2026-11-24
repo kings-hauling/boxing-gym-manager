@@ -705,7 +705,7 @@
         </div>
 
         <div id="trainerSection" hidden>
-          <h2 class="sec">トレーナー（引退した先輩たち） <span class="sec-note">現役時代の経験が、後輩の育成を後押しする「継承」</span></h2>
+          <h2 class="sec">トレーナー <span class="sec-note">引退した先輩の「継承」と、商店でスカウトした専属トレーナー。どちらも育つ速さを後押しする（素質の上限は上がらない）</span></h2>
           <div id="trainerList"></div>
         </div>
 
@@ -725,7 +725,7 @@
         <div class="panel" style="margin-bottom:14px;">
           <div class="rates">
             出現率（公開）：★1 45% ／ ★2 32% ／ ★3 15% ／ ★4 6% ／ ★5 2%（★の抽選は合計100%）／ 天才は★の抽選とは別に候補1人あたり1%で判定され、当たると★5級の天才として登場する（素質の上限が軒並み高い。契約金は800万円）<br />
-            在籍枠：<b id="scoutCapText"></b>　／　再スカウト（候補の入れ替え）は1回20万円、何回でも可
+            在籍枠：<b id="scoutCapText"></b>（初期は2人。枠は商店の「ジム拡張」でポイントを使って段階的に増やせる）　／　再スカウト（候補の入れ替え）は1回20万円、何回でも可
           </div>
         </div>
         <div class="cand-grid" id="candGrid"></div>
@@ -747,7 +747,7 @@
         <h2 class="sec">プレミアム商店</h2>
         <div class="panel" style="margin-bottom:14px;">
           <div style="font-weight:900;font-size:1.05rem;">所持ポイント：<span class="num" id="shopPoints">0</span> pt</div>
-          <p class="lead" style="margin:6px 0 0;">この商店で買えるのは<b>「育つ速さ」と「資金」だけ</b>です。<b>選手の素質の上限は、課金でも一切超えられません。</b>特訓アイテムは経験値を増やすだけ――能力が上限に達した選手は、それ以上は伸びません。ポイントは、目標マッチ勝利（+20pt）・タイトル獲得（+50pt）・ジムの格アップ（+30pt）でも無料でもらえます。</p>
+          <p class="lead" style="margin:6px 0 0;">この商店で買えるのは<b>「育つ速さ」「資金」「ジムの広さ（選手枠）」「トレーナーの指導力」だけ</b>です。<b>選手の素質の上限は、課金でも一切超えられません。</b>特訓アイテムは経験値を増やすだけ――能力が上限に達した選手は、それ以上は伸びません。ポイントは、目標マッチ勝利（+20pt）・タイトル獲得（+50pt）・ジムの格アップ（+30pt）でも無料でもらえます。</p>
         </div>
         <h2 class="sec">アイテム <span class="sec-note">特訓アイテムの対象選手はここで選ぶ</span></h2>
         <div class="panel" style="margin-bottom:12px;">
@@ -758,6 +758,13 @@
           <div class="meal-effect" id="shopBoostNote"></div>
         </div>
         <div id="shopList"></div>
+        <h2 class="sec">ジム拡張 <span class="sec-note">所属できる選手の数を段階的に増やす</span></h2>
+        <div id="expansionList"></div>
+        <h2 class="sec">トレーナースカウト <span class="sec-note">名トレーナーをスカウトして育成を速くする</span></h2>
+        <div class="panel" style="margin-bottom:12px;">
+          <p class="lead" style="margin:0;">スカウト費用を払うと、まだ迎えていないトレーナーの中から1人がランダムで加入します。トレーナーが増えると全選手の練習経験値が毎月増えます（トレーナーボーナスは、引退選手がなる無料トレーナー分と合わせて月+2まで）。<b>素質の上限は上がりません</b>――上がるのは育つ速さだけです。引退した選手をトレーナーにする無料の道（継承）も今まで通り残っています。</p>
+        </div>
+        <div id="trainerScoutList"></div>
         <h2 class="sec">ポイントを購入する</h2>
         <div class="panel">
           <div class="rates">
@@ -837,6 +844,9 @@
           ・世界王者になると、防衛戦に加えて他団体の王者との「統一戦」が選べる。勝てばベルトを複数保持でき、試合画面では1本目は腰に、2本目以降は肩に掛けて表示される。<br />
           ・選手カードの「階級を変更」から階級を上げ下げでき、別の階級でもベルトを取れば多階級制覇として記録される。<br />
           ・商店ではポイントで特訓アイテムや資金パックが買える。目標マッチ勝利やタイトル獲得でも無料ポイントがもらえる。<br />
+          ・所属選手の枠は初期2人。商店の「ジム拡張」でポイントを使って段階的に増やせる（すでに枠より多く抱えているセーブは、そのまま維持できる）。<br />
+          ・商店の「トレーナースカウト」では、ポイントで名トレーナーをスカウトできる。トレーナーがいると練習で育つ速さが上がる（素質の上限は上がらない）。引退選手がトレーナーになる無料の継承もある。<br />
+          ・成長はゆっくりだ。練習で入る経験値は月2〜3、試合では約2。経験値1で能力が+1上がる。地道に育てよう。<br />
           ・進行状況はこの端末に自動保存されるので、閉じても続きから遊べる。最初からやり直したい時は「記録」タブのセーブデータ欄から消せる。
         </div>
       </div>
@@ -1024,16 +1034,16 @@
       { key: 'def', name: 'ディフェンス' }
     ];
     var TRAININGS = [
-      { id: 'normal', name: '通常練習', xp: 14, fatigue: 15, desc: 'バランスの取れた通常メニュー' },
-      { id: 'hard', name: 'みっちり特訓', xp: 22, fatigue: 25, desc: '経験値は多いが疲労も大きい' },
-      { id: 'light', name: '軽めの調整', xp: 9, fatigue: 6, desc: '疲労を抑えた軽い練習' },
-      { id: 'rest', name: '休養', xp: 3, fatigue: -32, desc: 'しっかり休んで疲労回復' }
+      { id: 'normal', name: '通常練習', xp: 3, fatigue: 16, desc: 'バランスの取れた通常メニュー' },
+      { id: 'hard', name: 'みっちり特訓', xp: 3, fatigue: 26, desc: '経験値は通常並みだが、追い込みでコンディションが整う。疲労は大きい' },
+      { id: 'light', name: '軽めの調整', xp: 2, fatigue: 6, desc: '疲労を抑えた軽い練習' },
+      { id: 'rest', name: '休養', xp: 0, fatigue: -32, desc: 'しっかり休んで疲労回復（経験値は入らない）' }
     ];
     var MEALS = [
-      { id: 'balance', name: 'バランス定食', xp: 2, fatigue: -8, cost: 3, desc: '栄養バランス重視。経験値+2／疲労-8／1人3万円' },
-      { id: 'protein', name: '高タンパク定食', xp: 4, fatigue: -6, cost: 5, desc: '肉と卵で体作り。経験値+4／疲労-6／1人5万円' },
-      { id: 'curry', name: 'ニンニク醤油カレー', xp: 3, fatigue: -13, cost: 4, desc: 'スタミナ食の定番。経験値+3／疲労-13／1人4万円' },
-      { id: 'light', name: '減量サポート食', xp: 1, fatigue: -10, cost: 3, desc: '軽めで回復寄り。経験値+1／疲労-10／1人3万円' },
+      { id: 'balance', name: 'バランス定食', xp: 0, fatigue: -8, cost: 3, desc: '栄養バランス重視。疲労-8／1人3万円' },
+      { id: 'protein', name: '高タンパク定食', xp: 0, fatigue: -6, cost: 5, desc: '肉と卵で体作り。疲労-6／1人5万円' },
+      { id: 'curry', name: 'ニンニク醤油カレー', xp: 0, fatigue: -13, cost: 4, desc: 'スタミナ食の定番。疲労-13／1人4万円' },
+      { id: 'light', name: '減量サポート食', xp: 0, fatigue: -10, cost: 3, desc: '軽めで回復寄り。疲労-10／1人3万円' },
       { id: 'cheap', name: '節約メニュー', xp: 0, fatigue: -4, cost: 1, desc: 'とにかく安く。経験値+0／疲労-4／1人1万円' }
     ];
     var TIERS = [
@@ -1055,12 +1065,12 @@
       { name: '世界に誇る名門', need: 240 }
     ];
     var FACILITIES = [
-      { id: 'bag', name: 'サンドバッグ増設', cost: 120, grade: 0, desc: '全選手の練習経験値 +2／月。' },
+      { id: 'bag', name: 'サンドバッグ増設', cost: 120, grade: 0, desc: '打ち込みの環境が整い、毎月、全選手の疲労がさらに -3 回復する。' },
       { id: 'sign', name: '看板と照明の改装', cost: 150, grade: 0, desc: '集客アップ。試合で増えるファンが +30%。' },
-      { id: 'mitt', name: 'ミット＆スピードバッグ一式', cost: 200, grade: 1, desc: '全選手の練習経験値 +3／月。' },
+      { id: 'mitt', name: 'ミット＆スピードバッグ一式', cost: 200, grade: 1, desc: '練習の質が上がり、毎月、全選手のコンディション +2。' },
       { id: 'sauna', name: '回復ルーム（サウナ・治療ベッド）', cost: 300, grade: 1, desc: '毎月、全選手の疲労がさらに -10 回復する。' },
       { id: 'ring2', name: 'リング2面化', cost: 350, grade: 2, desc: '興行が豪華に。ファイトマネー +20%。' },
-      { id: 'dorm', name: '選手寮', cost: 500, grade: 2, desc: '在籍枠 +3。住み込みで練習に集中できる。' }
+      { id: 'dorm', name: '選手寮', cost: 500, grade: 2, desc: '住み込みで生活リズムが整う。毎月、全選手の疲労 -6・コンディション +2。（選手枠は商店の「ジム拡張」で増える）' }
     ];
     var WEIGHTS = ['ミニマム級', 'ライトフライ級', 'フライ級', 'スーパーフライ級', 'バンタム級', 'スーパーバンタム級', 'フェザー級', 'スーパーフェザー級', 'ライト級', 'スーパーライト級', 'ウェルター級', 'スーパーウェルター級', 'ミドル級', 'スーパーミドル級', 'ライトヘビー級', 'ヘビー級'];
     /* 世界タイトル：実在と同じ4団体 × 16階級 ＝ 64本のベルト */
@@ -1257,6 +1267,15 @@
         if (!Array.isArray(G.usedCodes)) G.usedCodes = [];
         if (!G.facilities || typeof G.facilities !== 'object') G.facilities = {};
         if (typeof G.points !== 'number') G.points = 0;
+        if (!Array.isArray(G.paidTrainers)) G.paidTrainers = [];
+        if (typeof G.expansion !== 'number') {
+          // 旧セーブ移行：今いる選手は消さずそのまま維持し、枠が現在の人数を下回らない段階に合わせる（新規加入だけ枠で制限する）
+          G.expansion = 0;
+          var needCap = G.fighters.length;
+          for (var ei = 0; ei < EXPANSION_STAGES.length; ei++) { G.expansion = ei; if (EXPANSION_STAGES[ei].cap >= needCap) break; }
+          if (needCap > EXPANSION_STAGES[EXPANSION_STAGES.length - 1].cap) G.legacyCap = needCap;
+        }
+        if (typeof G.legacyCap !== 'number') G.legacyCap = 0;
         if (typeof G.xpBoost !== 'number') G.xpBoost = 0;
         if (typeof G.gradeMilestone !== 'number') G.gradeMilestone = 0;
         if (typeof G.funds !== 'number') G.funds = 0;
@@ -1518,7 +1537,22 @@
       GRADES.forEach(function (g, i) { if (sc >= g.need) idx = i; });
       return idx;
     }
-    function rosterCap() { return 6 + (G.facilities.dorm ? 3 : 0); }
+    /* ジム拡張：所属選手の枠は初期2人。商店でポイントを払い、段階的に増やす */
+    var EXPANSION_STAGES = [
+      { cap: 2, pt: 0 },
+      { cap: 3, pt: 60 },
+      { cap: 4, pt: 100 },
+      { cap: 5, pt: 150 },
+      { cap: 6, pt: 200 },
+      { cap: 8, pt: 300 },
+      { cap: 10, pt: 400 }
+    ];
+    function expansionTier() { return (G && typeof G.expansion === 'number') ? clamp(Math.floor(G.expansion), 0, EXPANSION_STAGES.length - 1) : 0; }
+    function rosterCap() {
+      var cap = EXPANSION_STAGES[expansionTier()].cap;
+      var legacy = (G && typeof G.legacyCap === 'number') ? G.legacyCap : 0; // 旧セーブで枠より多く抱えている場合の据え置き
+      return Math.max(cap, legacy);
+    }
     function isFightMonth() { return G.month % 2 === 0; }
     function dateLabel() { return G.year + '年目' + G.month + '月'; }
     function addLog(text, important) {
@@ -1545,6 +1579,9 @@
         usedCodes: [], // 使用済みコードの照合ハッシュ
         xpBoost: 0, // 経験値ブーストの残り月数
         gradeMilestone: 0, // 格アップの無料ポイント配布済み位置
+        expansion: 0, // ジム拡張の段階（選手枠は EXPANSION_STAGES で決まる。初期は2人）
+        legacyCap: 0, // 旧セーブ据え置き用の枠（通常は0）
+        paidTrainers: [], // 商店のスカウトで加入した専属トレーナー
         log: [],
         totalWins: 0, totalLosses: 0, totalKO: 0, totalTitles: 0,
         lastFinance: null
@@ -1573,9 +1610,6 @@
       var m = MEALS.filter(function (x) { return x.id === G.meal; })[0];
       var aki = (G.lastMeal === G.meal && G.mealStreak >= 3);
       return { meal: m, aki: aki, xp: aki ? Math.floor(m.xp / 2) : m.xp, fatigue: aki ? Math.ceil(m.fatigue / 2) : m.fatigue };
-    }
-    function facilityXpBonus() {
-      return (G.facilities.bag ? 2 : 0) + (G.facilities.mitt ? 3 : 0);
     }
     /* ---------- コンディション ---------- */
     function condLabel(v) { return v >= 85 ? '絶好調' : (v >= 70 ? '好調' : (v >= 50 ? '普通' : (v >= 30 ? '不調' : '絶不調'))); }
@@ -1726,12 +1760,18 @@
     }
 
     function statCost(f, key) {
-      var cost = 2 + Math.floor(f.stats[key] / 7);
-      // 継承：その能力が得意だった先輩トレーナーがいると、割り振りコストが下がる
-      if (G && G.trainers && G.trainers.some(function (t) { return t.specialty === key; })) cost = Math.max(1, cost - 1);
-      return cost;
+      // 成長はゆっくり：経験値1で能力+1（1対1）。速く育てたい場合はトレーナーで経験値の入りを増やす
+      return 1;
     }
-    function trainerBonusCount() { return G && G.trainers ? Math.min(3, G.trainers.length) : 0; }
+    /* トレーナーの育成ボーナス（月あたりの練習経験値）。無料の継承トレーナーは在籍で+1、
+       商店スカウトの専属トレーナーは1人ごとに +1〜+2。合計は月+2まで（素質の上限は上がらない） */
+    function trainerXpBonus() {
+      if (!G) return 0;
+      var bonus = 0;
+      if (G.trainers && G.trainers.length > 0) bonus += 1;
+      if (G.paidTrainers) G.paidTrainers.forEach(function (t) { bonus += (t.xp || 1); });
+      return Math.min(2, bonus);
+    }
 
     function renderFighters() {
       var wrap = $('fighterList');
@@ -1786,7 +1826,7 @@
             html += '<button class="stat-plus" data-plus="' + f.id + ':' + s.key + '" ' + ((f.xp < cost || v >= cap) ? 'disabled' : '') + ' title="経験値' + cost + 'で+1">+</button>';
             html += '</div>';
           });
-          html += '<div style="font-size:.74rem;color:var(--ink-soft);">バーの黒い線がその選手の素質の上限。+ボタンで経験値を消費して能力を上げる（コストは能力が高いほど増える）。</div>';
+          html += '<div style="font-size:.74rem;color:var(--ink-soft);">バーの黒い線がその選手の素質の上限。+ボタンで経験値1を消費して能力を+1上げる。練習では月2〜3、試合では約2しか入らないので、成長はゆっくりだ。</div>';
           html += '</div>';
         }
         html += '</article>';
@@ -1931,12 +1971,12 @@
         f.age = irnd(17, 19);
         f.gen = gen;
         f.genius = !!p.genius;
-        // 引き継ぎは初期値と育ちやすさまで：前世の最終能力の約35%を初期値の下限にし、経験値を付けて再スタート
+        // 引き継ぎは初期値と育ちやすさまで：前世の最終能力の約35%を初期値の下限にし、経験値を少し付けて再スタート
         STATS.forEach(function (s) {
           var inherited = clamp(Math.round((p.stats[s.key] || 0) * 0.35), 5, f.caps[s.key]);
           if (inherited > f.stats[s.key]) f.stats[s.key] = inherited;
         });
-        f.xp = 40;
+        f.xp = 6;
         f.wins = 0; f.losses = 0; f.ko = 0; f.draws = 0; f.tier = 0; f.rankPt = 0; f.titlesWon = 0; f.rookieKing = false;
         f.bgId = 'rebirth'; f.bgLabel = '転生'; f.bgTag = '第' + gen + '世代';
         f.bgDetail = '引退した名選手' + p.name + 'の生まれ変わりと噂される若手。同じ顔、同じ' + p.style + 'のスタイル、そして前世を思わせる動きの冴えと迷いのなさを持つ。受け継いだのは血と経験の欠片だけ――天井の高さは今世の素材次第だ。';
@@ -1952,18 +1992,28 @@
       render();
     }
 
-    /* 引退した先輩トレーナー（継承）の表示 */
+    /* トレーナーの表示：引退した先輩（継承・無料）と、商店でスカウトした専属トレーナー */
     function renderTrainers() {
       var sec = $('trainerSection');
-      if (!G.trainers || G.trainers.length === 0) { sec.hidden = true; return; }
+      var free = G.trainers || [];
+      var paid = G.paidTrainers || [];
+      if (free.length === 0 && paid.length === 0) { sec.hidden = true; $('trainerList').innerHTML = ''; return; }
       sec.hidden = false;
       var html = '';
-      G.trainers.forEach(function (t) {
+      free.forEach(function (t) {
         var specName = (STATS.filter(function (s) { return s.key === t.specialty; })[0] || {}).name || '';
         html += '<div class="trainer-card">' + faceHtml(t, 'face-md') + '<div>';
         html += '<span class="tr-name">' + esc(t.name) + ' トレーナー</span>' + (t.gen >= 2 ? ' <span class="gen-badge">第' + t.gen + '世代</span>' : '');
-        html += '<div class="tr-meta">現役通算 ' + t.wins + '勝' + t.losses + '敗（' + t.ko + 'KO）／最高ランク ' + TIERS[t.tier].name + (t.titlesWon ? '／タイトル ' + t.titlesWon + '度獲得' : '') + '／' + t.retireYear + '年目に引退</div>';
-        html += '<div class="tr-bonus">育成ボーナス：全選手の練習経験値 +2／月・コンディション +2／月（最大3人分まで合算）。得意だった「' + specName + '」の割り振りコスト -1。</div>';
+        html += '<div class="tr-meta">現役通算 ' + t.wins + '勝' + t.losses + '敗（' + t.ko + 'KO）／最高ランク ' + TIERS[t.tier].name + (t.titlesWon ? '／タイトル ' + t.titlesWon + '度獲得' : '') + '／' + t.retireYear + '年目に引退（継承・無料）</div>';
+        html += '<div class="tr-bonus">育成ボーナス：全選手の練習経験値 +1／月・コンディション +1／月（トレーナーボーナスは他のトレーナーと合わせて月+2まで）。得意だった「' + specName + '」の指導が行き届く。</div>';
+        html += '</div></div>';
+      });
+      paid.forEach(function (t) {
+        var specName = (STATS.filter(function (s) { return s.key === t.specialty; })[0] || {}).name || '';
+        html += '<div class="trainer-card">' + faceHtml(t, 'face-md') + '<div>';
+        html += '<span class="tr-name">' + esc(t.name) + ' トレーナー</span> <span class="genius-badge">スカウト</span>';
+        html += '<div class="tr-meta">' + esc(t.grade || '一流') + 'トレーナー／得意分野：' + specName + '／' + esc(t.desc || '') + '</div>';
+        html += '<div class="tr-bonus">育成ボーナス：全選手の練習経験値 +' + (t.xp || 1) + '／月（トレーナーボーナスは他のトレーナーと合わせて月+2まで）。名指導で育つ速さが上がる（素質の上限は上がらない）。</div>';
         html += '</div></div>';
       });
       $('trainerList').innerHTML = html;
@@ -2000,7 +2050,7 @@
         html += bgBoxHtml(c);
         html += '<div class="cand-stats">得意：<b>' + best.n + ' ' + best.v + '</b>（上限' + c.caps[STATS.filter(function (s) { return s.name === best.n; })[0].key] + '）<br />総合力：<b>' + Math.round(statAvg(c)) + '</b>／素質上限の平均：<b>' + Math.round(STATS.reduce(function (a, s) { return a + c.caps[s.key]; }, 0) / 6) + '</b></div>';
         html += '<button class="btn btn-red" data-sign="' + i + '" ' + (G.fighters.length >= rosterCap() || G.funds < signCost(c) ? 'disabled' : '') + '>契約金' + signCost(c) + '万円で迎え入れる</button>';
-        if (G.fighters.length >= rosterCap()) html += '<div class="cand-meta">在籍枠がいっぱいです（寮を建てると枠が増える）</div>';
+        if (G.fighters.length >= rosterCap()) html += '<div class="cand-meta">在籍枠がいっぱいです（商店の「ジム拡張」で枠が増える）</div>';
         else if (G.funds < signCost(c)) html += '<div class="cand-meta">資金が足りません</div>';
         html += '</div>';
       });
@@ -2130,8 +2180,8 @@
     /* ================= プレミアム商店（ポイント課金） ================= */
     /* 線引き：買えるのは「育つ速さ（経験値）」と「資金」と「時短」だけ。素質の上限は課金でも超えられない */
     var SHOP_ITEMS = [
-      { id: 'tokkun', name: '特訓アイテム', pt: 30, target: true, desc: '選んだ選手の経験値 +40。能力を素質上限まで速く上げるための近道（上限そのものは上がらない）。', apply: function (f) { f.xp += 40; return f.name + ' の経験値が+40された'; } },
-      { id: 'boost', name: '経験値ブースト（1ヶ月）', pt: 60, target: false, desc: '次の1ヶ月、全選手の練習経験値が2倍になる。興行前の追い込みに。', apply: function () { G.xpBoost = 1; return '次の1ヶ月、全選手の練習経験値が2倍になる'; } },
+      { id: 'tokkun', name: '特訓アイテム', pt: 20, target: true, desc: '選んだ選手の経験値 +3。能力を素質上限まで速く上げるための近道（上限そのものは上がらない）。', apply: function (f) { f.xp += 3; return f.name + ' の経験値が+3された'; } },
+      { id: 'boost', name: '経験値ブースト（1ヶ月）', pt: 40, target: false, desc: '次の1ヶ月、全選手の練習経験値 +1。地道な育成の底上げに。', apply: function () { G.xpBoost = 1; return '次の1ヶ月、全選手の練習経験値が+1される'; } },
       { id: 'fundsS', name: '資金パック（200万円）', pt: 50, target: false, desc: 'ジム資金 +200万円。施設の建設費や経営の立て直しに使える。', apply: function () { G.funds += 200; return 'ジム資金が+200万円された'; } },
       { id: 'fundsL', name: '資金パック大（600万円）', pt: 130, target: false, desc: 'ジム資金 +600万円。選手寮など大きな投資の足しに。', apply: function () { G.funds += 600; return 'ジム資金が+600万円された'; } },
       { id: 'reroll', name: 'スカウト再抽選', pt: 20, target: false, desc: '今月のスカウト候補3人を即座に入れ替える（通常は20万円かかる時短アイテム）。', apply: function () { refreshCandidates(); return 'スカウト候補が新しい3人に入れ替わった'; } },
@@ -2164,6 +2214,45 @@
         toast('ジムの格アップ！ 無料ポイント+' + (30 * d) + 'pt');
       }
     }
+    /* ---------- 商店スカウトの専属トレーナー（課金） ----------
+       効果は「育つ速さ」だけ：練習経験値のボーナス（合計+2まで）。素質の上限は上がらない。
+       引退選手がトレーナーになる無料の継承ルートは別に残っている */
+    var PAID_TRAINERS = [
+      { id: 'pt_pow', name: '鬼瓦 剛史', specialty: 'pow', grade: '伝説級', xp: 2, faceIdx: 10, desc: '元世界王者のセコンドを務めた剛腕指導者。パンチの打ち込みで選手を鍛え上げる。' },
+      { id: 'pt_spd', name: '疾風 隼人', specialty: 'spd', grade: '伝説級', xp: 2, faceIdx: 9, desc: 'フットワーク指導の第一人者。出入りの速さを徹底的に仕込む。' },
+      { id: 'pt_tec', name: '佐伯 巧', specialty: 'tec', grade: '一流', xp: 1, faceIdx: 11, desc: '当て勘を磨く職人肌のコーチ。フォームの細部まで見逃さない。' },
+      { id: 'pt_def', name: '岩倉 鉄平', specialty: 'def', grade: '一流', xp: 1, faceIdx: 13, desc: 'ガードと距離の管理を叩き込む、守備の専門家。' },
+      { id: 'pt_sta', name: '長谷川 徹', specialty: 'sta', grade: '一流', xp: 1, faceIdx: 14, desc: 'ロードワークと食事管理でスタミナを作る、体力づくりの鬼。' },
+      { id: 'pt_hrt', name: '熱田 心一', specialty: 'hrt', grade: '一流', xp: 1, faceIdx: 5, desc: 'メンタルトレーニングの専門家。終盤で折れない心を育てる。' }
+    ];
+    var TRAINER_SCOUT_PT = 80;
+    function buyExpansion() {
+      var tier = expansionTier();
+      if (tier >= EXPANSION_STAGES.length - 1) { toast('これ以上は拡張できません'); return; }
+      var next = EXPANSION_STAGES[tier + 1];
+      if ((G.points || 0) < next.pt) { toast('ポイントが足りません'); return; }
+      G.points -= next.pt;
+      G.expansion = tier + 1;
+      addLog('商店で「ジム拡張 Lv.' + (tier + 1) + '」を購入（' + next.pt + 'pt）。所属できる選手の枠が' + rosterCap() + '人になった。', true);
+      toast('ジム拡張！ 選手枠が' + rosterCap() + '人に');
+      render();
+    }
+    function scoutTrainer() {
+      if (!Array.isArray(G.paidTrainers)) G.paidTrainers = [];
+      var owned = G.paidTrainers.map(function (t) { return t.id; });
+      var pool = PAID_TRAINERS.filter(function (t) { return owned.indexOf(t.id) < 0; });
+      if (pool.length === 0) { toast('スカウトできるトレーナーはもういません'); return; }
+      if ((G.points || 0) < TRAINER_SCOUT_PT) { toast('ポイントが足りません'); return; }
+      G.points -= TRAINER_SCOUT_PT;
+      var weighted = [];
+      pool.forEach(function (t) { var w = t.xp >= 2 ? 1 : 3; for (var i = 0; i < w; i++) weighted.push(t); }); // 伝説級は出にくい
+      var t = pick(weighted);
+      G.paidTrainers.push({ id: t.id, name: t.name, specialty: t.specialty, grade: t.grade, xp: t.xp, faceIdx: t.faceIdx, desc: t.desc, paid: true });
+      var specName = (STATS.filter(function (x) { return x.key === t.specialty; })[0] || {}).name || '';
+      addLog('商店のトレーナースカウトで、' + t.grade + 'トレーナー「' + t.name + '」（得意：' + specName + '）がジムに加入した（' + TRAINER_SCOUT_PT + 'pt）。練習経験値のボーナスが増え、選手が育ちやすくなる。', true);
+      toast(t.name + ' トレーナーが加入！');
+      render();
+    }
     function renderShop() {
       if (!G) return;
       $('shopPoints').textContent = fmt(G.points || 0);
@@ -2171,7 +2260,7 @@
       var prev = sel.value;
       sel.innerHTML = G.fighters.map(function (f) { return '<option value="' + f.id + '">' + esc(f.name) + '（経験値 ' + f.xp + '）</option>'; }).join('');
       if (prev && getFighter(prev)) sel.value = prev;
-      $('shopBoostNote').textContent = G.xpBoost > 0 ? '経験値ブースト発動中：今月の練習経験値は2倍。' : '';
+      $('shopBoostNote').textContent = G.xpBoost > 0 ? '経験値ブースト発動中：今月の練習経験値は全選手+1。' : '';
       var html = '';
       SHOP_ITEMS.forEach(function (item) {
         html += '<div class="fac-row"><div class="fac-info"><div class="fac-name">' + item.name + '　<span class="xp-pill">' + item.pt + 'pt</span></div>';
@@ -2182,6 +2271,39 @@
       $('shopList').innerHTML = html;
       var btns = $('shopList').querySelectorAll('[data-buy]');
       for (var i = 0; i < btns.length; i++) btns[i].addEventListener('click', function () { buyShopItem(this.getAttribute('data-buy')); });
+      renderExpansion();
+      renderTrainerScout();
+    }
+    function renderExpansion() {
+      var wrap = $('expansionList');
+      if (!wrap) return;
+      var tier = expansionTier();
+      var maxed = tier >= EXPANSION_STAGES.length - 1;
+      var html = '<div class="fac-row"><div class="fac-info"><div class="fac-name">現在の選手枠：<span class="num">' + G.fighters.length + ' / ' + rosterCap() + '</span>人（拡張 Lv.' + tier + '）</div>';
+      html += '<div class="fac-desc">' + (maxed ? '最大まで拡張済みです（' + EXPANSION_STAGES[EXPANSION_STAGES.length - 1].cap + '人）。' : '次の拡張で枠が ' + EXPANSION_STAGES[tier + 1].cap + '人 になります。拡張は段階制で、順番にしか買えません。枠は「スカウトで迎え入れる人数」の上限です。') + '</div></div>';
+      if (maxed) html += '<span class="owned-tag">最大まで拡張済み</span>';
+      else html += '<button class="btn btn-red" id="expansionBtn" ' + ((G.points || 0) < EXPANSION_STAGES[tier + 1].pt ? 'disabled' : '') + '>ジム拡張 Lv.' + (tier + 1) + '（' + EXPANSION_STAGES[tier + 1].pt + 'pt）</button>';
+      html += '</div>';
+      wrap.innerHTML = html;
+      var b = $('expansionBtn');
+      if (b) b.addEventListener('click', buyExpansion);
+    }
+    function renderTrainerScout() {
+      var wrap = $('trainerScoutList');
+      if (!wrap) return;
+      if (!Array.isArray(G.paidTrainers)) G.paidTrainers = [];
+      var ownedIds = G.paidTrainers.map(function (t) { return t.id; });
+      var remain = PAID_TRAINERS.filter(function (t) { return ownedIds.indexOf(t.id) < 0; }).length;
+      var html = '<div class="fac-row"><div class="fac-info"><div class="fac-name">トレーナーをスカウトする　<span class="xp-pill">' + TRAINER_SCOUT_PT + 'pt</span></div>';
+      html += '<div class="fac-desc">加入済み ' + G.paidTrainers.length + '人／残りの候補 ' + remain + '人。誰が来るかは来てからのお楽しみ（伝説級は出にくい）。効果は全選手の練習経験値アップのみで、素質の上限は上がりません。</div></div>';
+      html += '<button class="btn btn-red" id="trainerScoutBtn" ' + ((G.points || 0) < TRAINER_SCOUT_PT || remain === 0 ? 'disabled' : '') + '>' + (remain === 0 ? '全員スカウト済み' : TRAINER_SCOUT_PT + 'ptでスカウト') + '</button></div>';
+      G.paidTrainers.forEach(function (t) {
+        var specName = (STATS.filter(function (x) { return x.key === t.specialty; })[0] || {}).name || '';
+        html += '<div class="fac-row"><div class="fac-info"><div class="fac-name">' + esc(t.name) + ' トレーナー（' + esc(t.grade || '一流') + '）</div><div class="fac-desc">得意分野：' + specName + '／練習経験値 +' + (t.xp || 1) + '／月（合計+2まで）</div></div><span class="owned-tag">加入済み</span></div>';
+      });
+      wrap.innerHTML = html;
+      var b = $('trainerScoutBtn');
+      if (b) b.addEventListener('click', scoutTrainer);
     }
     function buyShopItem(id) {
       var item = SHOP_ITEMS.filter(function (x) { return x.id === id; })[0];
@@ -2882,25 +3004,25 @@
     function applyFightResult(f, m, res) {
       var tier = TIERS[f.tier];
       var purse = tier.purse * (G.facilities.ring2 ? 1.2 : 1);
-      var gainXp = 8, rankGain = 0, label, detail;
+      var gainXp = 1, rankGain = 0, label, detail;
       var fanGain = 0;
       if (res.win === true) {
         f.wins++; G.totalWins++;
         if (res.ko) { f.ko++; G.totalKO++; }
-        gainXp = res.ko ? 24 : 18;
+        gainXp = 2; // 試合の成長は約2ポイントまで（勝ち）
         rankGain = 6 + (m.oppTier > f.tier ? 3 : 0) + (res.ko ? 2 : 0);
         purse = Math.round(purse * 1.5);
         fanGain = Math.round((10 + f.tier * 6 + (res.ko ? 8 : 0)) * (G.facilities.sign ? 1.3 : 1));
         label = f.name + ' の勝利！（' + res.method + '）';
       } else if (res.win === false) {
         f.losses++; G.totalLosses++;
-        gainXp = 10; rankGain = 1;
+        gainXp = 1; rankGain = 1;
         purse = Math.round(purse * 0.6);
         fanGain = Math.round(2 * (G.facilities.sign ? 1.3 : 1));
         label = f.name + ' 敗北（' + res.method + '）';
       } else {
         f.draws++;
-        gainXp = 12; rankGain = 3;
+        gainXp = 1; rankGain = 3;
         purse = Math.round(purse);
         fanGain = 5;
         label = f.name + ' 引き分け';
@@ -3029,11 +3151,11 @@
       { id: 'flu', cond: function () { return G.fighters.length > 0; }, run: function () { var f = pick(G.fighters); f.cond = clamp((f.cond || 70) - 18, 5, 100); return 'ジムで風邪が流行し、' + f.name + 'が体調を崩した。コンディションが大きく低下している。'; } },
       { id: 'repair', cond: function () { return G.funds >= 60; }, run: function () { G.funds -= 45; return 'リングのロープとサンドバッグが傷み、修理・交換に45万円かかった。安全には代えられない出費だ。'; } },
       { id: 'buzz', cond: function () { return G.fighters.some(function (f) { return f.star >= 3 || f.tier >= 3; }); }, run: function () { var f = G.fighters.filter(function (x) { return x.star >= 3 || x.tier >= 3; })[0]; G.fans += 120; f.cond = clamp((f.cond || 70) + 8, 5, 100); return f.name + 'の試合動画がSNSで話題になった。ファンが120人増え、本人もノリノリでコンディションが上向いた。'; } },
-      { id: 'spar', cond: function () { return G.fighters.length > 0; }, run: function () { var f = pick(G.fighters); f.xp += 10; f.fatigue = clamp(f.fatigue + 6, 0, 100); return '他ジムの強豪が出稽古に来て、' + f.name + 'が格上とのスパーリングで経験値+10。得るものの大きい1日だった。'; } },
+      { id: 'spar', cond: function () { return G.fighters.length > 0; }, run: function () { var f = pick(G.fighters); f.xp += 2; f.fatigue = clamp(f.fatigue + 6, 0, 100); return '他ジムの強豪が出稽古に来て、' + f.name + 'が格上とのスパーリングで経験値+2。得るものの大きい1日だった。'; } },
       { id: 'fansclub', run: function () { var v = irnd(3, 8); G.members += v; return '近所の商店街が応援団を結成してくれた。会員が' + v + '人増え、ジムが少し賑やかになった。'; } },
       { id: 'magazine', run: function () { G.fans += 45; G.funds += 20; return '格闘技雑誌にジムの特集記事が載った。取材謝礼20万円と、新しいファン45人。'; } },
-      { id: 'ob', cond: function () { return G.fighters.length > 0; }, run: function () { G.fighters.forEach(function (f) { f.xp += 5; }); return 'ジムの卒業生が顔を出し、現役選手にアドバイスを残していった。全選手の経験値+5。先輩の言葉は重い。'; } },
-      { id: 'slump', cond: function () { return G.fighters.length > 0; }, run: function () { var f = pick(G.fighters); f.cond = clamp((f.cond || 70) - 12, 5, 100); f.xp += 4; return f.name + 'がスランプ気味で、練習でも精彩を欠いた。コンディション低下。ただ、悩みながらも練習量は落としていない（経験値+4）。'; } }
+      { id: 'ob', cond: function () { return G.fighters.length > 0; }, run: function () { G.fighters.forEach(function (f) { f.xp += 1; }); return 'ジムの卒業生が顔を出し、現役選手にアドバイスを残していった。全選手の経験値+1。先輩の言葉は重い。'; } },
+      { id: 'slump', cond: function () { return G.fighters.length > 0; }, run: function () { var f = pick(G.fighters); f.cond = clamp((f.cond || 70) - 12, 5, 100); f.xp += 1; return f.name + 'がスランプ気味で、練習でも精彩を欠いた。コンディション低下。ただ、悩みながらも練習量は落としていない（経験値+1）。'; } }
     ];
     function runMonthlyEvent() {
       if (Math.random() > 0.72) return;
@@ -3064,14 +3186,14 @@
           return;
         }
         var t = TRAININGS.filter(function (x) { return x.id === f.training; })[0];
-        var xpGain = t.xp + e.xp + facilityXpBonus() + trainerBonusCount() * 2; // 継承：先輩トレーナーの指導
+        var xpGain = t.xp + e.xp + trainerXpBonus(); // 練習は月2〜3。トレーナーがいると最大+2まで底上げ
+        if (G.xpBoost > 0) xpGain += 1; // 商店の経験値ブースト
         if (f.fatigue >= 85 && t.id !== 'rest') xpGain = Math.floor(xpGain / 2); // 疲労困憊では伸びない
-        if (G.xpBoost > 0) xpGain *= 2; // 商店の経験値ブースト
         f.xp += Math.max(0, xpGain);
-        f.fatigue = clamp(f.fatigue + t.fatigue + e.fatigue - (G.facilities.sauna ? 10 : 0), 0, 100);
+        f.fatigue = clamp(f.fatigue + t.fatigue + e.fatigue - (G.facilities.sauna ? 10 : 0) - (G.facilities.bag ? 3 : 0) - (G.facilities.dorm ? 6 : 0), 0, 100);
         // コンディションの月次変動：練習の質とトレーナーの目配りで上下する
-        var condDelta = irnd(-3, 3) + trainerBonusCount() * 2;
-        if (t.id === 'hard') condDelta -= 5;
+        var condDelta = irnd(-3, 3) + (trainerXpBonus() > 0 ? 1 : 0) + (G.facilities.mitt ? 2 : 0) + (G.facilities.dorm ? 2 : 0);
+        if (t.id === 'hard') condDelta += 7;
         else if (t.id === 'light') condDelta += 5;
         else if (t.id === 'rest') condDelta += 11;
         else condDelta += 2;
